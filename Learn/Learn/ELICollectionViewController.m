@@ -13,7 +13,6 @@
 @interface ELICollectionViewController () <UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate>
 
 @property NSMutableArray* collectionData;
-@property UIScreenEdgePanGestureRecognizer *swipeLeft;
 @property ELISidebar *sidebar;
 
 @end
@@ -40,13 +39,13 @@
     
     self.navigationItem.title = self.title;
     
-    _swipeLeft = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeLeft:)];
-    [_swipeLeft setEdges:UIRectEdgeRight];
-    [_swipeLeft setDelegate:self];
-    [self.view addGestureRecognizer:_swipeLeft];
     
-    _sidebar = [[ELISidebar alloc] initWithinView:self.collectionView considerNavidationItem:self.navigationItem];
+    UIScreenEdgePanGestureRecognizer *swipeLeft = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeLeft:)];
+    [swipeLeft setEdges:UIRectEdgeRight];
+    [swipeLeft setDelegate:self];
+    [self.view addGestureRecognizer:swipeLeft];
     
+    _sidebar = [[ELISidebar alloc] initWithinView:self.collectionView considerNavigationBar:self.navigationController.navigationBar];
 }
 
 - (void)didReceiveMemoryWarning
@@ -134,7 +133,7 @@
 - (void)didRotate:(NSNotification*)notification
 {
     // Resize when rotated
-    [_sidebar readjustFrameWithinView:self.collectionView considerNavigationItem:self.navigationItem];
+    [_sidebar readjustFrameWithinView:self.collectionView considerNavigationBar:self.navigationController.navigationBar];
 }
 
 - (void)showSidebar

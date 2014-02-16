@@ -10,4 +10,9 @@
 
 @interface ELIClassViewController : UIViewController
 
+- (void)showSidebar;
+- (void)hideSidebar;
+
+- (void)didRotate:(NSNotification*)notification;
+
 @end

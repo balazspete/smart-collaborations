@@ -36,13 +36,15 @@
 
 - (ELISidebar *)initWithinView:(UIView*)parentView
 {
-    return [self initWithinView:parentView considerNavidationItem:nil];
+    return [self initWithinView:parentView considerNavigationBar:nil];
 }
 
-- (ELISidebar *)initWithinView:(UIView*)parentView considerNavidationItem:(UINavigationItem*)navigationItem
+- (ELISidebar *)initWithinView:(UIView*)parentView considerNavigationBar:(UINavigationBar*)navigationBar
 {
     
     self = [self initWithFrame:parentView.bounds];
+    
+    int yOffset = navigationBar.bounds.size.height;
     
     _overlay = [[UIView alloc] initWithFrame:[self getOverlayBoundsWithinView:parentView]];
     _overlay.backgroundColor = [UIColor blackColor];
@@ -52,7 +54,7 @@
     UITapGestureRecognizer *singleFingerTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapOnOverlay:)];
     [_overlay addGestureRecognizer:singleFingerTap];
     
-    _sidebar = [[UIView alloc] initWithFrame:[self getToolbarSizeWithinView:parentView considerNavigationItem:navigationItem]];
+    _sidebar = [[UIView alloc] initWithFrame:[self getToolbarSizeWithinView:parentView withVerticalOffset:yOffset]];
     _sidebar.backgroundColor = [UIColor clearColor];
     
     _backgroundToolbar = [[UIToolbar alloc] initWithFrame:_sidebar.frame];
@@ -73,31 +75,21 @@
     return overlayBounds;
 }
 
-- (CGRect)getToolbarSizeWithinView:(UIView*)parentView considerNavigationItem:(UINavigationItem*)navigationItem
+- (CGRect)getToolbarSizeWithinView:(UIView*)parentView withVerticalOffset:(int)yOffset
 {
     int sidebarWidth = ELISidebar.sidebarWidth;
     CGSize collectionViewSize = parentView.bounds.size;
     CGRect sidebarSize =  parentView.bounds;
     
-    if (navigationItem != nil)
-    {
-        int navigationHeight = navigationItem.titleView.bounds.size.height;
-        sidebarSize = CGRectMake(collectionViewSize.width-navigationHeight-sidebarWidth, 0, sidebarWidth, collectionViewSize.height);
-    }
-    else
-    {
-        sidebarSize = CGRectMake(collectionViewSize.width-sidebarWidth, 0, sidebarWidth, collectionViewSize.height);
-    }
-    
-
+    sidebarSize = CGRectMake(collectionViewSize.width-sidebarWidth, 0, sidebarWidth, collectionViewSize.height);
     
     return sidebarSize;
 }
 
-- (void)readjustFrameWithinView:(UIView*)parentView considerNavigationItem:(UINavigationItem*)navigationItem
+- (void)readjustFrameWithinView:(UIView*)parentView considerNavigationBar:(UINavigationBar*)navigationBar
 {
     [self setFrame:parentView.frame];
-    [_backgroundToolbar setFrame:[self getToolbarSizeWithinView:parentView considerNavigationItem:navigationItem]];
+    [_backgroundToolbar setFrame:[self getToolbarSizeWithinView:parentView withVerticalOffset:navigationBar.bounds.size.height]];
     [_overlay setFrame:[self getOverlayBoundsWithinView:parentView]];
 }
 

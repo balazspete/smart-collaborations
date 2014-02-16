@@ -89,7 +89,7 @@
             </objects>
             <point key="canvasLocation" x="3130" y="-122"/>
         </scene>
-        <!--Class View Controller-->
+        <!--Class View Controller - Title-->
         <scene sceneID="lhh-oG-0Ep">
             <objects>
                 <viewController id="NOb-cd-bLx" customClass="ELIClassViewController" sceneMemberID="viewController">
@@ -103,11 +103,12 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Title" id="DP3-Ut-pf2"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vkd-ja-QI6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4258" y="-115"/>
+            <point key="canvasLocation" x="4281" y="-102"/>
         </scene>
         <!--Navigation Controller - Item-->
         <scene sceneID="RTK-Hu-LLf">

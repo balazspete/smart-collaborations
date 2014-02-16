@@ -14,11 +14,12 @@
 
 - (ELISidebar *)initWithinView:(UIView*)parentView;
 
-- (ELISidebar *)initWithinView:(UIView*)parentView considerNavidationItem:(UINavigationItem*)navigationItem;
+- (ELISidebar *)initWithinView:(UIView*)parentView considerNavigationBar:(UINavigationBar*)navigationBar;
 
-- (void)readjustFrameWithinView:(UIView*)parentView considerNavigationItem:(UINavigationItem*)navigationItem;
+- (void)readjustFrameWithinView:(UIView*)parentView considerNavigationBar:(UINavigationBar*)navigationBar;
 
 - (void)showSidebar;
+
 - (void)hideSidebar;
 
 - (void)handleTapOnOverlay:(UITapGestureRecognizer *)recogniser;
