@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="xx5-qA-x8T">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+    </dependencies>
+    <scenes>
+        <!--Collection View Controller - My Classes-->
+        <scene sceneID="4co-UF-tqW">
+            <objects>
+                <collectionViewController autoresizesArchivedViewToFullSize="NO" title="My Classes" id="ii7-wj-nR7" customClass="ELICollectionViewController" sceneMemberID="viewController">
+                    <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="ouW-tM-LuF">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Rqh-sh-6AK">
+                            <size key="itemSize" width="227" height="231"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <view key="backgroundView" contentMode="scaleToFill" restorationIdentifier="Sidebar" id="j8t-fh-Tev" customClass="ELISidebar">
+                            <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Rd-O6-NL3">
+                                    <rect key="frame" x="958" y="82" width="46" height="30"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" title="Button">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                </button>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dqx-cy-nrn">
+                                    <rect key="frame" x="924" y="0.0" width="100" height="768"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                </view>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        </view>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ELICell" id="kBI-Fd-Nz7" customClass="ELICollectionCell">
+                                <rect key="frame" x="0.0" y="64" width="227" height="231"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="227" height="231"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="a7r-Iy-ROt">
+                                            <rect key="frame" x="0.0" y="0.0" width="227" height="231"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PTs-9x-DYe">
+                                            <rect key="frame" x="20" y="201" width="187" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="PTs-9x-DYe" secondAttribute="trailing" constant="20" id="7Ma-Kd-p4y"/>
+                                    <constraint firstAttribute="trailing" secondItem="a7r-Iy-ROt" secondAttribute="trailing" id="Pa5-ik-poI"/>
+                                    <constraint firstItem="a7r-Iy-ROt" firstAttribute="leading" secondItem="kBI-Fd-Nz7" secondAttribute="leading" id="VMy-vO-KWm"/>
+                                    <constraint firstAttribute="bottom" secondItem="PTs-9x-DYe" secondAttribute="bottom" constant="9" id="iwI-eW-LNF"/>
+                                    <constraint firstItem="PTs-9x-DYe" firstAttribute="leading" secondItem="kBI-Fd-Nz7" secondAttribute="leading" constant="20" id="veG-wu-Bky"/>
+                                    <constraint firstAttribute="bottom" secondItem="a7r-Iy-ROt" secondAttribute="bottom" id="xBb-FT-0VN"/>
+                                    <constraint firstItem="a7r-Iy-ROt" firstAttribute="top" secondItem="kBI-Fd-Nz7" secondAttribute="top" id="yh7-Xn-kYQ"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="image" destination="a7r-Iy-ROt" id="4cS-13-9Gr"/>
+                                    <outlet property="label" destination="PTs-9x-DYe" id="vI8-bh-fSO"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="ii7-wj-nR7" id="T8W-Mc-2y4"/>
+                            <outlet property="delegate" destination="ii7-wj-nR7" id="nMv-w7-Kcx"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" id="Cmr-em-Ja0"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Wdh-hT-xhe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3130" y="-122"/>
+        </scene>
+        <!--Navigation Controller - Item-->
+        <scene sceneID="RTK-Hu-LLf">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="xx5-qA-x8T" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="yqH-Yh-qFf"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Xva-JH-CH6">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="ii7-wj-nR7" kind="relationship" relationship="rootViewController" id="T1s-QB-Ggn"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9Ry-Od-Gas" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2156" y="-122"/>
+        </scene>
+    </scenes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar" statusBarStyle="lightContent"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination"/>
+    </simulatedMetricsContainer>
+</document>
