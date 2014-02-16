@@ -16,4 +16,6 @@
 
 - (ELISidebar *)initWithinView:(UIView*)parentView considerNavidationItem:(UINavigationItem*)navigationItem;
 
+- (CGRect)getSizeWithinView:(UIView*)parentView considerNavigationItem:(UINavigationItem*)navigationItem;
+
 @end

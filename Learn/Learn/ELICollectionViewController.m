@@ -16,6 +16,7 @@
 @property UIScreenEdgePanGestureRecognizer *swipeLeft;
 @property ELISidebar *sidebar;
 @property UIToolbar* backgroundToolbar;
+@property UIView *overlay;
 
 @end
 
@@ -33,8 +34,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    // Register ELICollectionCell
+    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotate:) name:@"UIDeviceOrientationDidChangeNotification" object:nil];
     
     self.collectionData = [NSMutableArray arrayWithObjects:@"text1", @"text2", @"text3", @"text4", nil];
 	// Do any additional setup after loading the view.
@@ -46,6 +47,13 @@
     [_swipeLeft setDelegate:self];
     [self.view addGestureRecognizer:_swipeLeft];
     
+    _overlay = [[UIView alloc] initWithFrame:[self getOverlayBounds]];
+    _overlay.backgroundColor = [UIColor blackColor];
+    [_overlay setAlpha:0.7f];
+    [_overlay setHidden:YES];
+    
+    UITapGestureRecognizer *singleFingerTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapOnOverlay:)];
+    [_overlay addGestureRecognizer:singleFingerTap];
     
     _sidebar = [[ELISidebar alloc] initWithinView:self.collectionView considerNavidationItem:self.navigationItem];
     _sidebar.backgroundColor = [UIColor clearColor];
@@ -53,10 +61,11 @@
     _backgroundToolbar = [[UIToolbar alloc] initWithFrame:_sidebar.frame];
     _backgroundToolbar.barStyle = UIBarStyleDefault;
     [_backgroundToolbar setTranslucent:YES];
-    [self.collectionView insertSubview:_backgroundToolbar aboveSubview:self.collectionView];
     [_backgroundToolbar setHidden:YES];
     
-    //[self.collectionView ]
+    [self.collectionView insertSubview:_overlay aboveSubview:self.collectionView];
+    [self.collectionView insertSubview:_backgroundToolbar aboveSubview:_overlay];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -138,9 +147,40 @@
 
 - (IBAction)handleSwipeLeft:(id)sender
 {
+    [self showSidebar];
+}
+
+- (void)didRotate:(NSNotification*)notification
+{
+    // Resize when rotated
+    [_overlay setFrame:[self getOverlayBounds]];
+    [_backgroundToolbar setFrame:[_sidebar getSizeWithinView:self.collectionView considerNavigationItem:self.navigationItem]];
+}
+
+- (void)showSidebar
+{
     [self.view removeGestureRecognizer:_swipeLeft];
+    [_overlay setHidden:NO];
     [_backgroundToolbar setHidden:NO];
-    NSLog(@"HERE");
+}
+
+- (void)hideSidebar
+{
+    [self.view addGestureRecognizer:_swipeLeft];
+    [_overlay setHidden:YES];
+    [_backgroundToolbar setHidden:YES];
+}
+
+- (CGRect)getOverlayBounds
+{
+    CGRect overlayBounds = self.collectionView.frame;
+    overlayBounds.size.width = overlayBounds.size.width - [ELISidebar sidebarWidth];
+    return overlayBounds;
+}
+
+- (void)handleTapOnOverlay:(UITapGestureRecognizer *)recogniser
+{
+    [self hideSidebar];
 }
 
 @end

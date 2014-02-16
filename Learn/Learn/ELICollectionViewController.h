@@ -11,6 +11,10 @@
 @interface ELICollectionViewController : UICollectionViewController
 
 - (void)showSidebar;
+- (void)hideSidebar;
 
+- (void)didRotate:(NSNotification*)notification;
+
+- (CGRect)getOverlayBounds;
 
 @end

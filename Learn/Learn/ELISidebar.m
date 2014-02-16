@@ -32,6 +32,11 @@
 
 - (ELISidebar *)initWithinView:(UIView*)parentView considerNavidationItem:(UINavigationItem*)navigationItem
 {
+    return [self initWithFrame:[self getSizeWithinView:parentView considerNavigationItem:navigationItem]];
+}
+
+- (CGRect)getSizeWithinView:(UIView*)parentView considerNavigationItem:(UINavigationItem*)navigationItem
+{
     int sidebarWidth = ELISidebar.sidebarWidth;
     CGSize collectionViewSize = parentView.bounds.size;
     CGRect sidebarSize =  parentView.bounds;
@@ -46,7 +51,7 @@
         sidebarSize = CGRectMake(collectionViewSize.width-sidebarWidth, 0, sidebarWidth, collectionViewSize.height);
     }
     
-    return [self initWithFrame:sidebarSize];
+    return sidebarSize;
 }
 
 /*
