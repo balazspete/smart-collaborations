@@ -16,6 +16,11 @@
 
 - (ELISidebar *)initWithinView:(UIView*)parentView considerNavidationItem:(UINavigationItem*)navigationItem;
 
-- (CGRect)getSizeWithinView:(UIView*)parentView considerNavigationItem:(UINavigationItem*)navigationItem;
+- (void)readjustFrameWithinView:(UIView*)parentView considerNavigationItem:(UINavigationItem*)navigationItem;
+
+- (void)showSidebar;
+- (void)hideSidebar;
+
+- (void)handleTapOnOverlay:(UITapGestureRecognizer *)recogniser;
 
 @end

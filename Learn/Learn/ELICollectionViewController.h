@@ -15,6 +15,4 @@
 
 - (void)didRotate:(NSNotification*)notification;
 
-- (CGRect)getOverlayBounds;
-
 @end

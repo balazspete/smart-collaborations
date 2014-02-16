@@ -15,8 +15,6 @@
 @property NSMutableArray* collectionData;
 @property UIScreenEdgePanGestureRecognizer *swipeLeft;
 @property ELISidebar *sidebar;
-@property UIToolbar* backgroundToolbar;
-@property UIView *overlay;
 
 @end
 
@@ -47,24 +45,7 @@
     [_swipeLeft setDelegate:self];
     [self.view addGestureRecognizer:_swipeLeft];
     
-    _overlay = [[UIView alloc] initWithFrame:[self getOverlayBounds]];
-    _overlay.backgroundColor = [UIColor blackColor];
-    [_overlay setAlpha:0.7f];
-    [_overlay setHidden:YES];
-    
-    UITapGestureRecognizer *singleFingerTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapOnOverlay:)];
-    [_overlay addGestureRecognizer:singleFingerTap];
-    
     _sidebar = [[ELISidebar alloc] initWithinView:self.collectionView considerNavidationItem:self.navigationItem];
-    _sidebar.backgroundColor = [UIColor clearColor];
-    
-    _backgroundToolbar = [[UIToolbar alloc] initWithFrame:_sidebar.frame];
-    _backgroundToolbar.barStyle = UIBarStyleDefault;
-    [_backgroundToolbar setTranslucent:YES];
-    [_backgroundToolbar setHidden:YES];
-    
-    [self.collectionView insertSubview:_overlay aboveSubview:self.collectionView];
-    [self.collectionView insertSubview:_backgroundToolbar aboveSubview:_overlay];
     
 }
 
@@ -153,34 +134,17 @@
 - (void)didRotate:(NSNotification*)notification
 {
     // Resize when rotated
-    [_overlay setFrame:[self getOverlayBounds]];
-    [_backgroundToolbar setFrame:[_sidebar getSizeWithinView:self.collectionView considerNavigationItem:self.navigationItem]];
+    [_sidebar readjustFrameWithinView:self.collectionView considerNavigationItem:self.navigationItem];
 }
 
 - (void)showSidebar
 {
-    [self.view removeGestureRecognizer:_swipeLeft];
-    [_overlay setHidden:NO];
-    [_backgroundToolbar setHidden:NO];
+    [_sidebar showSidebar];
 }
 
 - (void)hideSidebar
 {
-    [self.view addGestureRecognizer:_swipeLeft];
-    [_overlay setHidden:YES];
-    [_backgroundToolbar setHidden:YES];
-}
-
-- (CGRect)getOverlayBounds
-{
-    CGRect overlayBounds = self.collectionView.frame;
-    overlayBounds.size.width = overlayBounds.size.width - [ELISidebar sidebarWidth];
-    return overlayBounds;
-}
-
-- (void)handleTapOnOverlay:(UITapGestureRecognizer *)recogniser
-{
-    [self hideSidebar];
+    [_sidebar hideSidebar];
 }
 
 @end

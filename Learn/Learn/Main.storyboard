@@ -72,7 +72,8 @@
                                 </constraints>
                                 <connections>
                                     <outlet property="image" destination="a7r-Iy-ROt" id="4cS-13-9Gr"/>
-                                    <outlet property="label" destination="PTs-9x-DYe" id="vI8-bh-fSO"/>
+                                    <outlet property="label" destination="PTs-9x-DYe" id="wGR-Je-6RG"/>
+                                    <segue destination="NOb-cd-bLx" kind="push" id="wjF-0k-CGG"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -87,6 +88,26 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wdh-hT-xhe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3130" y="-122"/>
+        </scene>
+        <!--Class View Controller-->
+        <scene sceneID="lhh-oG-0Ep">
+            <objects>
+                <viewController id="NOb-cd-bLx" customClass="ELIClassViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="meK-k9-Ehg"/>
+                        <viewControllerLayoutGuide type="bottom" id="xqI-q0-hkC"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Wla-wY-NOE">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Vkd-ja-QI6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4258" y="-115"/>
         </scene>
         <!--Navigation Controller - Item-->
         <scene sceneID="RTK-Hu-LLf">
