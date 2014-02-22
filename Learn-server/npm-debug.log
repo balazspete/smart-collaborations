@@ -1,0 +1,123 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install' ]
+2 info using npm@1.1.46
+3 info using node@v0.8.5
+4 verbose config file /Users/balazspete/.npmrc
+5 verbose config file /usr/local/etc/npmrc
+6 verbose config file /usr/local/lib/node_modules/npm/npmrc
+7 verbose read json /Users/balazspete/Projects/classroom-learning-environment/Learn-server/package.json
+8 warn package.json Learn-Server@0.0.1 No README.md file found!
+9 verbose readDependencies using package.json deps
+10 verbose install where, deps [ '/Users/balazspete/Projects/classroom-learning-environment/Learn-server',
+10 verbose install   [ 'coffee-script', 'express' ] ]
+11 verbose from cache /Users/balazspete/Projects/classroom-learning-environment/Learn-server/package.json
+12 info preinstall Learn-Server@0.0.1
+13 verbose from cache /Users/balazspete/Projects/classroom-learning-environment/Learn-server/package.json
+14 verbose readDependencies using package.json deps
+15 verbose cache add [ 'coffee-script@1.7.x', null ]
+16 silly cache add name=undefined spec="coffee-script@1.7.x" args=["coffee-script@1.7.x",null]
+17 verbose parsed url { pathname: 'coffee-script@1.7.x',
+17 verbose parsed url   path: 'coffee-script@1.7.x',
+17 verbose parsed url   href: 'coffee-script@1.7.x' }
+18 silly cache add name="coffee-script" spec="1.7.x" args=["coffee-script","1.7.x"]
+19 verbose parsed url { pathname: '1.7.x', path: '1.7.x', href: '1.7.x' }
+20 verbose addNamed [ 'coffee-script', '1.7.x' ]
+21 verbose addNamed [ null, '>=1.7.0- <1.8.0-' ]
+22 verbose cache add [ 'express@>=3.4.8', null ]
+23 silly cache add name=undefined spec="express@>=3.4.8" args=["express@>=3.4.8",null]
+24 verbose parsed url { pathname: 'express@%3E=3.4.8',
+24 verbose parsed url   path: 'express@%3E=3.4.8',
+24 verbose parsed url   href: 'express@%3E=3.4.8' }
+25 silly cache add name="express" spec=">=3.4.8" args=["express",">=3.4.8"]
+26 verbose parsed url { pathname: '%3E=3.4.8', path: '%3E=3.4.8', href: '%3E=3.4.8' }
+27 verbose addNamed [ 'express', '>=3.4.8' ]
+28 verbose addNamed [ null, '>=3.4.8' ]
+29 silly lockFile ff923ba2-coffee-script-1-7-x coffee-script@1.7.x
+30 verbose lock coffee-script@1.7.x /Users/balazspete/.npm/ff923ba2-coffee-script-1-7-x.lock
+31 silly lockFile 4d27a830-express-3-4-8 express@>=3.4.8
+32 verbose lock express@>=3.4.8 /Users/balazspete/.npm/4d27a830-express-3-4-8.lock
+33 silly addNameRange { name: 'coffee-script',
+33 silly addNameRange   range: '>=1.7.0- <1.8.0-',
+33 silly addNameRange   hasData: false }
+34 silly addNameRange { name: 'express', range: '>=3.4.8', hasData: false }
+35 verbose url raw coffee-script
+36 verbose url resolving [ 'https://registry.npmjs.org/', './coffee-script' ]
+37 verbose url resolved https://registry.npmjs.org/coffee-script
+38 info retry registry request attempt 1 at 12:10:44
+39 verbose etag "FMB4Y6SCJR32P6J30F565TLM"
+40 http GET https://registry.npmjs.org/coffee-script
+41 verbose url raw express
+42 verbose url resolving [ 'https://registry.npmjs.org/', './express' ]
+43 verbose url resolved https://registry.npmjs.org/express
+44 info retry registry request attempt 1 at 12:10:44
+45 verbose etag "A4UE5J3VYMFYN8Y56GG94YM47"
+46 http GET https://registry.npmjs.org/express
+47 info retry will retry, error on last attempt: Error: SSL Error: CERT_UNTRUSTED
+48 info retry will retry, error on last attempt: Error: SSL Error: CERT_UNTRUSTED
+49 info retry registry request attempt 2 at 12:10:55
+50 verbose etag "FMB4Y6SCJR32P6J30F565TLM"
+51 http GET https://registry.npmjs.org/coffee-script
+52 info retry registry request attempt 2 at 12:10:55
+53 verbose etag "A4UE5J3VYMFYN8Y56GG94YM47"
+54 http GET https://registry.npmjs.org/express
+55 info retry will retry, error on last attempt: Error: SSL Error: CERT_UNTRUSTED
+56 info retry will retry, error on last attempt: Error: SSL Error: CERT_UNTRUSTED
+57 info retry registry request attempt 3 at 12:11:55
+58 verbose etag "FMB4Y6SCJR32P6J30F565TLM"
+59 http GET https://registry.npmjs.org/coffee-script
+60 info retry registry request attempt 3 at 12:11:55
+61 verbose etag "A4UE5J3VYMFYN8Y56GG94YM47"
+62 http GET https://registry.npmjs.org/express
+63 silly registry.get cb [ 304, undefined ]
+64 verbose etag coffee-script from cache
+65 silly addNameRange number 2 { name: 'coffee-script',
+65 silly addNameRange   range: '>=1.7.0- <1.8.0-',
+65 silly addNameRange   hasData: true }
+66 silly addNameRange versions [ 'coffee-script',
+66 silly addNameRange   [ '0.7.0',
+66 silly addNameRange     '0.7.1',
+66 silly addNameRange     '0.7.2',
+66 silly addNameRange     '0.9.0',
+66 silly addNameRange     '0.9.1',
+66 silly addNameRange     '0.9.2',
+66 silly addNameRange     '0.9.3',
+66 silly addNameRange     '0.9.4',
+66 silly addNameRange     '0.9.5',
+66 silly addNameRange     '0.9.6',
+66 silly addNameRange     '1.0.0',
+66 silly addNameRange     '1.0.1',
+66 silly addNameRange     '1.1.0',
+66 silly addNameRange     '1.1.1',
+66 silly addNameRange     '1.1.2',
+66 silly addNameRange     '1.1.3',
+66 silly addNameRange     '1.2.0',
+66 silly addNameRange     '1.3.0',
+66 silly addNameRange     '1.3.1',
+66 silly addNameRange     '1.3.2',
+66 silly addNameRange     '1.3.3',
+66 silly addNameRange     '1.4.0',
+66 silly addNameRange     '1.5.0',
+66 silly addNameRange     '1.6.0',
+66 silly addNameRange     '1.6.1',
+66 silly addNameRange     '1.6.2',
+66 silly addNameRange     '1.6.3' ] ]
+67 silly lockFile ff923ba2-coffee-script-1-7-x coffee-script@1.7.x
+68 error Error: No compatible version found: coffee-script@'>=1.7.0- <1.8.0-'
+68 error Valid install targets:
+68 error ["0.7.0","0.7.1","0.7.2","0.9.0","0.9.1","0.9.2","0.9.3","0.9.4","0.9.5","0.9.6","1.0.0","1.0.1","1.1.0","1.1.1","1.1.2","1.1.3","1.2.0","1.3.0","1.3.1","1.3.2","1.3.3","1.4.0","1.5.0","1.6.0","1.6.1","1.6.2","1.6.3"]
+68 error     at installTargetsError (/usr/local/lib/node_modules/npm/lib/cache.js:553:10)
+68 error     at next (/usr/local/lib/node_modules/npm/lib/cache.js:532:17)
+68 error     at /usr/local/lib/node_modules/npm/lib/cache.js:512:5
+68 error     at saved (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/get.js:138:7)
+68 error     at /usr/local/lib/node_modules/npm/node_modules/graceful-fs/graceful-fs.js:220:7
+68 error     at Object.oncomplete (fs.js:297:15)
+69 error If you need help, you may report this log at:
+69 error     <http://github.com/isaacs/npm/issues>
+69 error or email it to:
+69 error     <npm-@googlegroups.com>
+70 error System Darwin 13.0.0
+71 error command "node" "/usr/local/bin/npm" "install"
+72 error cwd /Users/balazspete/Projects/classroom-learning-environment/Learn-server
+73 error node -v v0.8.5
+74 error npm -v 1.1.46
+75 verbose exit [ 1, true ]
