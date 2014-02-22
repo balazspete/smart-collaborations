@@ -12,6 +12,8 @@
 
 + (int) sidebarWidth;
 
++ (float) getOverlayAlpha;
+
 - (ELISidebar *)initWithinView:(UIView*)parentView;
 
 - (ELISidebar *)initWithinView:(UIView*)parentView considerNavigationBar:(UINavigationBar*)navigationBar;

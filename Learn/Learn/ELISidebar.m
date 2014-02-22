@@ -13,6 +13,8 @@
 @property UIView *sidebar;
 @property UIToolbar* backgroundToolbar;
 @property UIView *overlay;
+@property UITapGestureRecognizer *singleFingerTap;
+@property BOOL sidebarAnimation;
 
 @end
 
@@ -24,9 +26,15 @@
     return 100;
 }
 
++ (float) getOverlayAlpha
+{
+    return 0.4f;
+}
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
+    _sidebarAnimation = YES;
     if (self) {
         // Initialization code
         
@@ -48,11 +56,10 @@
     
     _overlay = [[UIView alloc] initWithFrame:[self getOverlayBoundsWithinView:parentView]];
     _overlay.backgroundColor = [UIColor blackColor];
-    [_overlay setAlpha:0.4f];
+    [_overlay setAlpha:0];
     [_overlay setHidden:YES];
     
-    UITapGestureRecognizer *singleFingerTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapOnOverlay:)];
-    [_overlay addGestureRecognizer:singleFingerTap];
+    _singleFingerTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapOnOverlay:)];
     
     _sidebar = [[UIView alloc] initWithFrame:[self getToolbarSizeWithinView:parentView withVerticalOffset:yOffset]];
     _sidebar.backgroundColor = [UIColor clearColor];
@@ -97,16 +104,48 @@
 - (void)handleTapOnOverlay:(UITapGestureRecognizer *)recogniser
 {
     [self hideSidebar];
+    [_overlay removeGestureRecognizer:_singleFingerTap];
 }
 
 - (void)showSidebar
 {
-    [_overlay setHidden:NO];
+    if (!_sidebarAnimation)
+    {
+        return;
+    }
+    _sidebarAnimation = NO;
+    
+    CGRect finalBounds = _backgroundToolbar.bounds;
+    CGRect initialBounds = finalBounds;
+    initialBounds.origin.x -= [ELISidebar sidebarWidth];
+    [_backgroundToolbar setBounds:initialBounds];
+    
     [_backgroundToolbar setHidden:NO];
+    [_overlay setAlpha:0];
+
+    float sidebarAnimation = 0.05;
+    [UIView animateWithDuration:sidebarAnimation
+            delay:0
+            options:UIViewAnimationOptionCurveEaseIn
+            animations:^{
+                _backgroundToolbar.bounds = finalBounds;
+            }
+            completion:NULL];
+    [UIView animateWithDuration:0.2
+            delay:sidebarAnimation
+            options:UIViewAnimationOptionCurveEaseIn
+            animations:^{
+                [_overlay setHidden:NO];
+                [_overlay setAlpha:[ELISidebar getOverlayAlpha]];
+            }
+            completion:^(BOOL finished){
+                [_overlay addGestureRecognizer:_singleFingerTap];
+            }];
 }
 
 - (void)hideSidebar
 {
+    _sidebarAnimation = YES;
     [_overlay setHidden:YES];
     [_backgroundToolbar setHidden:YES];
 }

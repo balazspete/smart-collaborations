@@ -34,6 +34,7 @@
 	// Do any additional setup after loading the view.
     
     [self navigationItem].title = @"My Class";
+    self.view.backgroundColor = [UIColor darkGrayColor];
     
     
     UIScreenEdgePanGestureRecognizer *swipeLeft = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeLeft:)];
@@ -64,6 +65,7 @@
 
 - (void)showSidebar
 {
+    [_sidebar readjustFrameWithinView:self.view considerNavigationBar:self.navigationController.navigationBar];
     [_sidebar showSidebar];
 }
 

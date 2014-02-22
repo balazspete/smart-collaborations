@@ -9,6 +9,7 @@
 #import "ELICollectionViewController.h"
 #import "ELICollectionCell.h"
 #import "ELISidebar.h"
+#import "ELISectionHeader.h"
 
 @interface ELICollectionViewController () <UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate>
 
@@ -18,6 +19,12 @@
 @end
 
 @implementation ELICollectionViewController
+
+- (void)loadClasses
+{
+    
+}
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -34,11 +41,17 @@
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotate:) name:@"UIDeviceOrientationDidChangeNotification" object:nil];
     
-    self.collectionData = [NSMutableArray arrayWithObjects:@"text1", @"text2", @"text3", @"text4", nil];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.4f green:0.6f blue:0.8f alpha:1];
+    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, nil]];
+    
+    [self.collectionView registerClass:[ELISectionHeader class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"SectionHeader"];
+    [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"SectionFooter"];
+    
+    self.collectionData = [NSMutableArray arrayWithObjects:@"text1", @"text2", @"text3", @"text4", @"text3", @"text4", nil];
 	// Do any additional setup after loading the view.
     
     self.navigationItem.title = self.title;
-    
     
     UIScreenEdgePanGestureRecognizer *swipeLeft = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeLeft:)];
     [swipeLeft setEdges:UIRectEdgeRight];
@@ -46,6 +59,8 @@
     [self.view addGestureRecognizer:swipeLeft];
     
     _sidebar = [[ELISidebar alloc] initWithinView:self.collectionView considerNavigationBar:self.navigationController.navigationBar];
+    
+    [self loadClasses];
 }
 
 - (void)didReceiveMemoryWarning
@@ -61,7 +76,7 @@
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return 1;
+    return 2;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -81,7 +96,15 @@
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
-    return [super collectionView:collectionView viewForSupplementaryElementOfKind:kind atIndexPath:indexPath];//[[UICollectionReusableView alloc] init];
+    if (kind == UICollectionElementKindSectionHeader) {
+        ELISectionHeader *header = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"SectionHeader" forIndexPath:indexPath];
+        [header.label setText:[@"Class name" uppercaseString]];
+        header.label.textColor = [UIColor colorWithRed:0 green:0.8f blue:0 alpha:1];
+        
+        return header;
+    }
+    
+    return [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"SectionFooter" forIndexPath:indexPath];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -96,12 +119,12 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(200, 200);
+    return CGSizeMake(160, 190);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
-    return UIEdgeInsetsMake(20, 20, 20, 20);
+    return UIEdgeInsetsMake(20, 20, 0, 20);
 }
 
 // Two gestures may not be recognised simultaneously
@@ -132,7 +155,8 @@
 
 - (void)didRotate:(NSNotification*)notification
 {
-    // Resize when rotated
+    // Resize when rotated]
+    NSLog(@"%f %f %f",self.collectionView.backgroundView.frame.size.width, self.collectionView.frame.size.width, self.navigationController.navigationBar.frame.size.width);
     [_sidebar readjustFrameWithinView:self.collectionView considerNavigationBar:self.navigationController.navigationBar];
 }
 

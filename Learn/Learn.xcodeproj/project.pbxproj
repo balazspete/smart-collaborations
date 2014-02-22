@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DDACCBA01F8B4024BBAD361F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B93B99CA05C4614ABE41DDF /* libPods.a */; };
 		E861D1FA18AF95AC0033F0A0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E861D1F918AF95AC0033F0A0 /* Foundation.framework */; };
 		E861D1FC18AF95AC0033F0A0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E861D1FB18AF95AC0033F0A0 /* CoreGraphics.framework */; };
 		E861D1FE18AF95AC0033F0A0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E861D1FD18AF95AC0033F0A0 /* UIKit.framework */; };
@@ -27,7 +28,10 @@
 		E861D23518AF97DC0033F0A0 /* ELICollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E861D23418AF97DC0033F0A0 /* ELICollectionCell.m */; };
 		E861D23718AFECBD0033F0A0 /* small-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E861D23618AFECBD0033F0A0 /* small-icon.png */; };
 		E861D23A18B00CB10033F0A0 /* ELISidebar.m in Sources */ = {isa = PBXBuildFile; fileRef = E861D23918B00CB10033F0A0 /* ELISidebar.m */; };
+		E8AA59C118B42A9F00126AB7 /* ELISectionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = E8AA59C018B42A9F00126AB7 /* ELISectionHeader.m */; };
 		E8B2A92618B14A8700925880 /* ELIClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B2A92518B14A8700925880 /* ELIClassViewController.m */; };
+		E8B4ED4618B90C3E002DE09C /* ELIClass.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B4ED4518B90C3E002DE09C /* ELIClass.m */; };
+		E8B4ED4918B90C4F002DE09C /* ELILecture.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B4ED4818B90C4F002DE09C /* ELILecture.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +45,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		36EB4878E2AC49378EDF40E4 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		7B93B99CA05C4614ABE41DDF /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E861D1F618AF95AC0033F0A0 /* Learn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Learn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E861D1F918AF95AC0033F0A0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E861D1FB18AF95AC0033F0A0 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -67,8 +73,16 @@
 		E861D23618AFECBD0033F0A0 /* small-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "small-icon.png"; path = "../small-icon.png"; sourceTree = "<group>"; };
 		E861D23818B00CB10033F0A0 /* ELISidebar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELISidebar.h; sourceTree = "<group>"; };
 		E861D23918B00CB10033F0A0 /* ELISidebar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELISidebar.m; sourceTree = "<group>"; };
+		E8AA59BF18B42A9F00126AB7 /* ELISectionHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELISectionHeader.h; sourceTree = "<group>"; };
+		E8AA59C018B42A9F00126AB7 /* ELISectionHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELISectionHeader.m; sourceTree = "<group>"; };
 		E8B2A92418B14A8700925880 /* ELIClassViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELIClassViewController.h; sourceTree = "<group>"; };
 		E8B2A92518B14A8700925880 /* ELIClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELIClassViewController.m; sourceTree = "<group>"; };
+		E8B4E95A18B8F529002DE09C /* libRestKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libRestKit.a; path = "RestKit-development/Build/Products/Debug-iphoneos/libRestKit.a"; sourceTree = "<group>"; };
+		E8B4E95C18B8F530002DE09C /* RestKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RestKit.framework; path = "RestKit-development/build/Debug/RestKit.framework"; sourceTree = "<group>"; };
+		E8B4ED4418B90C3E002DE09C /* ELIClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELIClass.h; sourceTree = "<group>"; };
+		E8B4ED4518B90C3E002DE09C /* ELIClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELIClass.m; sourceTree = "<group>"; };
+		E8B4ED4718B90C4F002DE09C /* ELILecture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELILecture.h; sourceTree = "<group>"; };
+		E8B4ED4818B90C4F002DE09C /* ELILecture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELILecture.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +94,7 @@
 				E861D20018AF95AC0033F0A0 /* CoreData.framework in Frameworks */,
 				E861D1FE18AF95AC0033F0A0 /* UIKit.framework in Frameworks */,
 				E861D1FA18AF95AC0033F0A0 /* Foundation.framework in Frameworks */,
+				DDACCBA01F8B4024BBAD361F /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -104,6 +119,7 @@
 				E861D21E18AF95AD0033F0A0 /* LearnTests */,
 				E861D1F818AF95AC0033F0A0 /* Frameworks */,
 				E861D1F718AF95AC0033F0A0 /* Products */,
+				36EB4878E2AC49378EDF40E4 /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -119,11 +135,14 @@
 		E861D1F818AF95AC0033F0A0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E8B4E95C18B8F530002DE09C /* RestKit.framework */,
+				E8B4E95A18B8F529002DE09C /* libRestKit.a */,
 				E861D1F918AF95AC0033F0A0 /* Foundation.framework */,
 				E861D1FB18AF95AC0033F0A0 /* CoreGraphics.framework */,
 				E861D1FD18AF95AC0033F0A0 /* UIKit.framework */,
 				E861D1FF18AF95AC0033F0A0 /* CoreData.framework */,
 				E861D21718AF95AD0033F0A0 /* XCTest.framework */,
+				7B93B99CA05C4614ABE41DDF /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -138,14 +157,9 @@
 				E861D20D18AF95AC0033F0A0 /* Learn.xcdatamodeld */,
 				E861D20218AF95AC0033F0A0 /* Supporting Files */,
 				E861D22E18AF95C90033F0A0 /* Main.storyboard */,
-				E8B2A92418B14A8700925880 /* ELIClassViewController.h */,
-				E8B2A92518B14A8700925880 /* ELIClassViewController.m */,
-				E861D23018AF96900033F0A0 /* ELICollectionViewController.h */,
-				E861D23118AF96900033F0A0 /* ELICollectionViewController.m */,
-				E861D23318AF97DC0033F0A0 /* ELICollectionCell.h */,
-				E861D23418AF97DC0033F0A0 /* ELICollectionCell.m */,
-				E861D23818B00CB10033F0A0 /* ELISidebar.h */,
-				E861D23918B00CB10033F0A0 /* ELISidebar.m */,
+				E8B4ED4218B90BF5002DE09C /* Controllers */,
+				E8B4ED4118B90BED002DE09C /* Views */,
+				E8B4ED4318B90BFC002DE09C /* Models */,
 			);
 			path = Learn;
 			sourceTree = "<group>";
@@ -179,6 +193,41 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		E8B4ED4118B90BED002DE09C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E861D23318AF97DC0033F0A0 /* ELICollectionCell.h */,
+				E861D23418AF97DC0033F0A0 /* ELICollectionCell.m */,
+				E861D23818B00CB10033F0A0 /* ELISidebar.h */,
+				E861D23918B00CB10033F0A0 /* ELISidebar.m */,
+				E8AA59BF18B42A9F00126AB7 /* ELISectionHeader.h */,
+				E8AA59C018B42A9F00126AB7 /* ELISectionHeader.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		E8B4ED4218B90BF5002DE09C /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				E8B2A92418B14A8700925880 /* ELIClassViewController.h */,
+				E8B2A92518B14A8700925880 /* ELIClassViewController.m */,
+				E861D23018AF96900033F0A0 /* ELICollectionViewController.h */,
+				E861D23118AF96900033F0A0 /* ELICollectionViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		E8B4ED4318B90BFC002DE09C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E8B4ED4418B90C3E002DE09C /* ELIClass.h */,
+				E8B4ED4518B90C3E002DE09C /* ELIClass.m */,
+				E8B4ED4718B90C4F002DE09C /* ELILecture.h */,
+				E8B4ED4818B90C4F002DE09C /* ELILecture.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -186,9 +235,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E861D22818AF95AD0033F0A0 /* Build configuration list for PBXNativeTarget "Learn" */;
 			buildPhases = (
+				69816E40AB4B43D781376CF1 /* Check Pods Manifest.lock */,
 				E861D1F218AF95AC0033F0A0 /* Sources */,
 				E861D1F318AF95AC0033F0A0 /* Frameworks */,
 				E861D1F418AF95AC0033F0A0 /* Resources */,
+				1F2D82113EA741218BAB451F /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -275,6 +326,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		1F2D82113EA741218BAB451F /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		69816E40AB4B43D781376CF1 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		E861D1F218AF95AC0033F0A0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -282,9 +366,12 @@
 			files = (
 				E861D20818AF95AC0033F0A0 /* main.m in Sources */,
 				E861D20C18AF95AC0033F0A0 /* ELIAppDelegate.m in Sources */,
+				E8B4ED4618B90C3E002DE09C /* ELIClass.m in Sources */,
 				E8B2A92618B14A8700925880 /* ELIClassViewController.m in Sources */,
 				E861D20F18AF95AC0033F0A0 /* Learn.xcdatamodeld in Sources */,
 				E861D23518AF97DC0033F0A0 /* ELICollectionCell.m in Sources */,
+				E8AA59C118B42A9F00126AB7 /* ELISectionHeader.m in Sources */,
+				E8B4ED4918B90C4F002DE09C /* ELILecture.m in Sources */,
 				E861D23218AF96900033F0A0 /* ELICollectionViewController.m in Sources */,
 				E861D23A18B00CB10033F0A0 /* ELISidebar.m in Sources */,
 			);
@@ -404,28 +491,34 @@
 		};
 		E861D22918AF95AD0033F0A0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 36EB4878E2AC49378EDF40E4 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Learn/Learn-Prefix.pch";
 				INFOPLIST_FILE = "Learn/Learn-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
 		};
 		E861D22A18AF95AD0033F0A0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 36EB4878E2AC49378EDF40E4 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Learn/Learn-Prefix.pch";
 				INFOPLIST_FILE = "Learn/Learn-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
