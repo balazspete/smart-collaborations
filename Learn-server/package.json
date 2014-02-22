@@ -1,0 +1,9 @@
+{
+	"name": "Learn-Server",
+	"version": "0.0.1",
+	"dependencies": {
+		"coffee-script": "1.6.3",
+		"express": ">=3.4.8"
+	},
+	"private": true
+}
