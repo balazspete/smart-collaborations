@@ -39,8 +39,8 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         </view>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ELICell" id="kBI-Fd-Nz7" customClass="ELICollectionCell">
-                                <rect key="frame" x="0.0" y="114" width="180" height="230"/>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ELICell" id="kBI-Fd-Nz7" customClass="ELILectureCell">
+                                <rect key="frame" x="0.0" y="50" width="180" height="230"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="180" height="230"/>
@@ -79,7 +79,7 @@
                             </collectionViewCell>
                         </cells>
                         <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="SectionHeader" reuseIdentifier="SectionHeader" id="RmU-ML-6JE" customClass="ELISectionHeader">
-                            <rect key="frame" x="0.0" y="64" width="1024" height="50"/>
+                            <rect key="frame" x="0.0" y="0.0" width="1024" height="50"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         </collectionReusableView>
                         <connections>
@@ -87,10 +87,17 @@
                             <outlet property="delegate" destination="ii7-wj-nR7" id="nMv-w7-Kcx"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" id="Cmr-em-Ja0"/>
+                    <navigationItem key="navigationItem" title="Title" id="hcM-TW-RBk"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wdh-hT-xhe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationBar contentMode="scaleToFill" id="6ge-0S-nbs">
+                    <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <items>
+                        <navigationItem title="Title" id="rs1-N9-WFV"/>
+                    </items>
+                </navigationBar>
             </objects>
             <point key="canvasLocation" x="4104" y="-122"/>
         </scene>

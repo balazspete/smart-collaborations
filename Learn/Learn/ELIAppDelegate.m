@@ -7,7 +7,10 @@
 //
 
 #import "ELIAppDelegate.h"
+#import <RestKit/RestKit.h>
 #import "ELICollectionViewController.h"
+#import "ELIClass.h"
+#import "ELILecture.h"
 
 @implementation ELIAppDelegate
 
@@ -17,12 +20,45 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-//    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-//
-//    self.window.rootViewController = [[UIViewController alloc] init];
-//    // Override point for customization after application launch.
-//    self.window.backgroundColor = [UIColor darkGrayColor];
-//    [self.window makeKeyAndVisible];
+//    RKLogConfigureByName("RestKit/Network*", RKLogLevelTrace);
+//    RKLogConfigureByName("RestKit/ObjectMapping", RKLogLevelTrace);
+    
+    // Let AFNetworking manage the activity indicator
+    [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
+    
+    // Initialise HTTP client
+    NSURL *baseUrl = [NSURL URLWithString:BASEURL];
+    AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:baseUrl];
+    
+    // Receive JSON responses
+    [client setDefaultHeader:@"Accept" value:RKMIMETypeJSON];
+    
+    // Initialise RestKit
+    RKObjectManager *objectManager = [[RKObjectManager alloc] initWithHTTPClient:client];
+    
+    // Describe lectures
+    RKObjectMapping *lectureMapping = [RKObjectMapping mappingForClass:[ELILecture class]];
+    [lectureMapping addAttributeMappingsFromDictionary:@{
+        @"url": @"url",
+        @"name": @"name",
+        @"image": @"imageUrl"
+    }];
+    
+    // Describe classes
+    RKObjectMapping *classMapping = [RKObjectMapping mappingForClass:[ELIClass class]];
+    [classMapping addAttributeMappingsFromDictionary:@{
+        @"url": @"url",
+        @"name": @"name"
+    }];
+    
+    // Describe relationship between classes and lectures
+    RKRelationshipMapping *lectureToClassRelationshipMapping = [RKRelationshipMapping relationshipMappingFromKeyPath:@"lectures" toKeyPath:@"lectures" withMapping:lectureMapping];
+    [classMapping addPropertyMapping:lectureToClassRelationshipMapping];
+    
+    // Register mappings with the provider using a response descriptor
+    RKResponseDescriptor *classesResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:classMapping method:RKRequestMethodGET pathPattern:@"/classes" keyPath:@"classes" statusCodes:[NSIndexSet indexSetWithIndex:200]];
+    [objectManager addResponseDescriptor:classesResponseDescriptor];
+    
     return YES;
 }
 

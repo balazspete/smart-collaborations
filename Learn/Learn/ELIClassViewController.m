@@ -33,16 +33,14 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotate:) name:@"UIDeviceOrientationDidChangeNotification" object:nil];
 	// Do any additional setup after loading the view.
     
-    [self navigationItem].title = @"My Class";
-    self.view.backgroundColor = [UIColor darkGrayColor];
-    
+    [self navigationItem].title = _lecture.name;
+    self.view.backgroundColor = [UIColor colorWithRed:0.2f green:0.2f blue:0.2f alpha:1];
     
     UIScreenEdgePanGestureRecognizer *swipeLeft = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeLeft:)];
     [swipeLeft setEdges:UIRectEdgeRight];
     [swipeLeft setDelegate:self];
     [self.view addGestureRecognizer:swipeLeft];
     
-    NSLog(@"%f", self.navigationController.navigationBar.bounds.size.height);
     _sidebar = [[ELISidebar alloc] initWithinView:self.view considerNavigationBar:self.navigationController.navigationBar];
 }
 

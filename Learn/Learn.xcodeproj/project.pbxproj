@@ -25,7 +25,7 @@
 		E861D22518AF95AD0033F0A0 /* LearnTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E861D22418AF95AD0033F0A0 /* LearnTests.m */; };
 		E861D22F18AF95C90033F0A0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E861D22E18AF95C90033F0A0 /* Main.storyboard */; };
 		E861D23218AF96900033F0A0 /* ELICollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E861D23118AF96900033F0A0 /* ELICollectionViewController.m */; };
-		E861D23518AF97DC0033F0A0 /* ELICollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E861D23418AF97DC0033F0A0 /* ELICollectionCell.m */; };
+		E861D23518AF97DC0033F0A0 /* ELILectureCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E861D23418AF97DC0033F0A0 /* ELILectureCell.m */; };
 		E861D23718AFECBD0033F0A0 /* small-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E861D23618AFECBD0033F0A0 /* small-icon.png */; };
 		E861D23A18B00CB10033F0A0 /* ELISidebar.m in Sources */ = {isa = PBXBuildFile; fileRef = E861D23918B00CB10033F0A0 /* ELISidebar.m */; };
 		E8AA59C118B42A9F00126AB7 /* ELISectionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = E8AA59C018B42A9F00126AB7 /* ELISectionHeader.m */; };
@@ -68,8 +68,8 @@
 		E861D22E18AF95C90033F0A0 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		E861D23018AF96900033F0A0 /* ELICollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELICollectionViewController.h; sourceTree = "<group>"; };
 		E861D23118AF96900033F0A0 /* ELICollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELICollectionViewController.m; sourceTree = "<group>"; };
-		E861D23318AF97DC0033F0A0 /* ELICollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELICollectionCell.h; sourceTree = "<group>"; };
-		E861D23418AF97DC0033F0A0 /* ELICollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELICollectionCell.m; sourceTree = "<group>"; };
+		E861D23318AF97DC0033F0A0 /* ELILectureCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELILectureCell.h; sourceTree = "<group>"; };
+		E861D23418AF97DC0033F0A0 /* ELILectureCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELILectureCell.m; sourceTree = "<group>"; };
 		E861D23618AFECBD0033F0A0 /* small-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "small-icon.png"; path = "../small-icon.png"; sourceTree = "<group>"; };
 		E861D23818B00CB10033F0A0 /* ELISidebar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELISidebar.h; sourceTree = "<group>"; };
 		E861D23918B00CB10033F0A0 /* ELISidebar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELISidebar.m; sourceTree = "<group>"; };
@@ -196,8 +196,8 @@
 		E8B4ED4118B90BED002DE09C /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				E861D23318AF97DC0033F0A0 /* ELICollectionCell.h */,
-				E861D23418AF97DC0033F0A0 /* ELICollectionCell.m */,
+				E861D23318AF97DC0033F0A0 /* ELILectureCell.h */,
+				E861D23418AF97DC0033F0A0 /* ELILectureCell.m */,
 				E861D23818B00CB10033F0A0 /* ELISidebar.h */,
 				E861D23918B00CB10033F0A0 /* ELISidebar.m */,
 				E8AA59BF18B42A9F00126AB7 /* ELISectionHeader.h */,
@@ -369,7 +369,7 @@
 				E8B4ED4618B90C3E002DE09C /* ELIClass.m in Sources */,
 				E8B2A92618B14A8700925880 /* ELIClassViewController.m in Sources */,
 				E861D20F18AF95AC0033F0A0 /* Learn.xcdatamodeld in Sources */,
-				E861D23518AF97DC0033F0A0 /* ELICollectionCell.m in Sources */,
+				E861D23518AF97DC0033F0A0 /* ELILectureCell.m in Sources */,
 				E8AA59C118B42A9F00126AB7 /* ELISectionHeader.m in Sources */,
 				E8B4ED4918B90C4F002DE09C /* ELILecture.m in Sources */,
 				E861D23218AF96900033F0A0 /* ELICollectionViewController.m in Sources */,

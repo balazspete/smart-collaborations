@@ -15,7 +15,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        self.label = [[UILabel alloc] initWithFrame:CGRectMake(22, 25, 500, 21)];
+        self.label = [[UILabel alloc] initWithFrame:CGRectMake(20, 25, 500, 21)];
         self.label.textColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.7f];
         [self.label setFont:[UIFont boldSystemFontOfSize:18]];
         

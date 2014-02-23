@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#define BASEURL @"http://192.168.1.1"
+
 @interface ELIAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;

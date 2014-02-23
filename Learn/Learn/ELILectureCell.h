@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ELILecture.h"
 
-@interface ELICollectionCell : UICollectionViewCell
+@interface ELILectureCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *label;
 @property (weak, nonatomic) IBOutlet UIImageView *image;
+
+@property (weak) ELILecture *lecture;
 
 @end

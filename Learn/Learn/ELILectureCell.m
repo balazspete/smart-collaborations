@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Balázs Pete. All rights reserved.
 //
 
-#import "ELICollectionCell.h"
+#import "ELILectureCell.h"
 
-@implementation ELICollectionCell
+@implementation ELILectureCell
 
 - (id)initWithFrame:(CGRect)frame
 {

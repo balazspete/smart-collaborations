@@ -12,6 +12,6 @@
 
 @property NSString* url;
 @property NSString* name;
-@property NSSet* lectures;
+@property NSArray* lectures;
 
 @end

@@ -10,8 +10,10 @@
 
 @interface ELILecture : NSObject
 
+@property NSString* className;
 @property NSString* url;
 @property NSString* name;
+@property NSString* imageUrl;
 @property NSSet* pages;
 
 @end
