@@ -32,6 +32,8 @@
 		E8B2A92618B14A8700925880 /* ELIClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B2A92518B14A8700925880 /* ELIClassViewController.m */; };
 		E8B4ED4618B90C3E002DE09C /* ELIClass.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B4ED4518B90C3E002DE09C /* ELIClass.m */; };
 		E8B4ED4918B90C4F002DE09C /* ELILecture.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B4ED4818B90C4F002DE09C /* ELILecture.m */; };
+		E8B4ED4C18B99280002DE09C /* ELILecturePage.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B4ED4B18B99280002DE09C /* ELILecturePage.m */; };
+		E8B4ED4F18BA9990002DE09C /* ELICollaborationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B4ED4E18BA9990002DE09C /* ELICollaborationTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +85,10 @@
 		E8B4ED4518B90C3E002DE09C /* ELIClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELIClass.m; sourceTree = "<group>"; };
 		E8B4ED4718B90C4F002DE09C /* ELILecture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELILecture.h; sourceTree = "<group>"; };
 		E8B4ED4818B90C4F002DE09C /* ELILecture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELILecture.m; sourceTree = "<group>"; };
+		E8B4ED4A18B99280002DE09C /* ELILecturePage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELILecturePage.h; sourceTree = "<group>"; };
+		E8B4ED4B18B99280002DE09C /* ELILecturePage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELILecturePage.m; sourceTree = "<group>"; };
+		E8B4ED4D18BA9990002DE09C /* ELICollaborationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELICollaborationTableViewCell.h; sourceTree = "<group>"; };
+		E8B4ED4E18BA9990002DE09C /* ELICollaborationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELICollaborationTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,6 +208,8 @@
 				E861D23918B00CB10033F0A0 /* ELISidebar.m */,
 				E8AA59BF18B42A9F00126AB7 /* ELISectionHeader.h */,
 				E8AA59C018B42A9F00126AB7 /* ELISectionHeader.m */,
+				E8B4ED4D18BA9990002DE09C /* ELICollaborationTableViewCell.h */,
+				E8B4ED4E18BA9990002DE09C /* ELICollaborationTableViewCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -224,6 +232,8 @@
 				E8B4ED4518B90C3E002DE09C /* ELIClass.m */,
 				E8B4ED4718B90C4F002DE09C /* ELILecture.h */,
 				E8B4ED4818B90C4F002DE09C /* ELILecture.m */,
+				E8B4ED4A18B99280002DE09C /* ELILecturePage.h */,
+				E8B4ED4B18B99280002DE09C /* ELILecturePage.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -372,6 +382,8 @@
 				E861D23518AF97DC0033F0A0 /* ELILectureCell.m in Sources */,
 				E8AA59C118B42A9F00126AB7 /* ELISectionHeader.m in Sources */,
 				E8B4ED4918B90C4F002DE09C /* ELILecture.m in Sources */,
+				E8B4ED4F18BA9990002DE09C /* ELICollaborationTableViewCell.m in Sources */,
+				E8B4ED4C18B99280002DE09C /* ELILecturePage.m in Sources */,
 				E861D23218AF96900033F0A0 /* ELICollectionViewController.m in Sources */,
 				E861D23A18B00CB10033F0A0 /* ELISidebar.m in Sources */,
 			);

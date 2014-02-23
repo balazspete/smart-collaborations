@@ -1,0 +1,16 @@
+{
+  "lecture": {
+    "url": "/class/1/lecture/1",
+    "name": "Lecture One",
+    "image": "/class/1/lecture/1/images/thumbnail",
+    "pages": [
+      {
+        "url": "/class/1/lecture/1/page/1",
+        "title": "Slide One",
+        "primary": "/class/1/lecture/1/images/page-1-primary",
+        "secondary": "/class/1/lecture/1/images/page-1-secondary",
+        "notes": "/class/1/lecture/1/page/1/collaboration"
+      }
+    ]
+  }
+}

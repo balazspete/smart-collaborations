@@ -13,10 +13,15 @@
 
 @property ELILecture *lecture;
 
+@property (weak, nonatomic) IBOutlet UIProgressView *progressIndicator;
+
 - (void)showSidebar;
 - (void)hideSidebar;
 
 - (void)didRotate:(NSNotification*)notification;
 
+@property (weak, nonatomic) IBOutlet UIView *primary;
+@property (weak, nonatomic) IBOutlet UIView *secondary;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 @end

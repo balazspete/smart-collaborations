@@ -14,6 +14,6 @@
 @property NSString* url;
 @property NSString* name;
 @property NSString* imageUrl;
-@property NSSet* pages;
+@property NSArray* pages;
 
 @end

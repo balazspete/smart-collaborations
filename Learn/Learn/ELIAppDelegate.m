@@ -11,6 +11,7 @@
 #import "ELICollectionViewController.h"
 #import "ELIClass.h"
 #import "ELILecture.h"
+#import "ELILecturePage.h"
 
 @implementation ELIAppDelegate
 
@@ -36,6 +37,16 @@
     // Initialise RestKit
     RKObjectManager *objectManager = [[RKObjectManager alloc] initWithHTTPClient:client];
     
+    // Describe pages
+    RKObjectMapping *pagesMapping = [RKObjectMapping mappingForClass:[ELILecturePage class]];
+    [pagesMapping addAttributeMappingsFromDictionary:@{
+        @"url": @"url",
+        @"title": @"title",
+        @"primary": @"primaryUrl",
+        @"secondary": @"secondaryUrl",
+        @"notes": @"notesUrl"
+    }];
+    
     // Describe lectures
     RKObjectMapping *lectureMapping = [RKObjectMapping mappingForClass:[ELILecture class]];
     [lectureMapping addAttributeMappingsFromDictionary:@{
@@ -43,6 +54,8 @@
         @"name": @"name",
         @"image": @"imageUrl"
     }];
+    RKRelationshipMapping *pagesToLectureRelationshipMapping = [RKRelationshipMapping relationshipMappingFromKeyPath:@"pages" toKeyPath:@"pages" withMapping:pagesMapping];
+    [lectureMapping addPropertyMapping:pagesToLectureRelationshipMapping];
     
     // Describe classes
     RKObjectMapping *classMapping = [RKObjectMapping mappingForClass:[ELIClass class]];
@@ -58,6 +71,9 @@
     // Register mappings with the provider using a response descriptor
     RKResponseDescriptor *classesResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:classMapping method:RKRequestMethodGET pathPattern:@"/classes" keyPath:@"classes" statusCodes:[NSIndexSet indexSetWithIndex:200]];
     [objectManager addResponseDescriptor:classesResponseDescriptor];
+
+    RKResponseDescriptor *lectureResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:lectureMapping method:RKRequestMethodGET pathPattern:@"/class/:classid/lecture/:lectureid" keyPath:@"lecture" statusCodes:[NSIndexSet indexSetWithIndex:200]];
+    [objectManager addResponseDescriptor:lectureResponseDescriptor];
     
     return YES;
 }
