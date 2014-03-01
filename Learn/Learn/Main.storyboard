@@ -119,17 +119,6 @@
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" red="0.011764707043766975" green="0.85490202903747559" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
                             </progressView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hFt-cH-JgC">
-                                <rect key="frame" x="8" y="74" width="550" height="340"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="550" id="Y7o-MW-YgP"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hDc-mM-Y8c">
-                                <rect key="frame" x="8" y="422" width="550" height="340"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="white" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="KnL-yQ-b2L">
                                 <rect key="frame" x="566" y="74" width="448" height="688"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -160,21 +149,36 @@
                                     <outlet property="delegate" destination="NOb-cd-bLx" id="tR9-9K-5UX"/>
                                 </connections>
                             </tableView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eYg-Ff-32i">
+                                <rect key="frame" x="7" y="74" width="550" height="340"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="550" id="WpG-xY-vfn"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8GU-Vp-ia4">
+                                <rect key="frame" x="8" y="422" width="550" height="340"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="550" id="R7b-ck-2la"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="hDc-mM-Y8c" firstAttribute="width" secondItem="hFt-cH-JgC" secondAttribute="width" id="51j-NE-S0w"/>
-                            <constraint firstItem="hFt-cH-JgC" firstAttribute="height" secondItem="hDc-mM-Y8c" secondAttribute="height" id="8KF-ZS-sXA"/>
-                            <constraint firstItem="pXU-M9-Tmv" firstAttribute="top" secondItem="hDc-mM-Y8c" secondAttribute="bottom" constant="6" id="Kgb-WI-hZ7"/>
-                            <constraint firstItem="hDc-mM-Y8c" firstAttribute="leading" secondItem="Wla-wY-NOE" secondAttribute="leading" constant="8" id="Qvw-3o-Wj0"/>
-                            <constraint firstItem="KnL-yQ-b2L" firstAttribute="leading" secondItem="hFt-cH-JgC" secondAttribute="trailing" constant="8" id="Rde-gt-qmp"/>
+                            <constraint firstItem="8GU-Vp-ia4" firstAttribute="top" secondItem="eYg-Ff-32i" secondAttribute="bottom" constant="8" id="FFP-8G-IyJ"/>
+                            <constraint firstItem="eYg-Ff-32i" firstAttribute="leading" secondItem="Wla-wY-NOE" secondAttribute="leading" constant="7" id="Ftt-zQ-rqK"/>
+                            <constraint firstItem="eYg-Ff-32i" firstAttribute="width" secondItem="8GU-Vp-ia4" secondAttribute="width" id="GqH-k6-VBv"/>
+                            <constraint firstItem="KnL-yQ-b2L" firstAttribute="leading" secondItem="eYg-Ff-32i" secondAttribute="trailing" constant="9" id="KBU-YS-OsO"/>
+                            <constraint firstItem="eYg-Ff-32i" firstAttribute="top" secondItem="n6M-Dc-X0e" secondAttribute="bottom" constant="10" id="Rnj-aV-TPX"/>
                             <constraint firstItem="KnL-yQ-b2L" firstAttribute="top" secondItem="n6M-Dc-X0e" secondAttribute="bottom" constant="10" id="bBB-wc-KQm"/>
                             <constraint firstAttribute="trailing" secondItem="KnL-yQ-b2L" secondAttribute="trailing" constant="10" id="cE6-A3-7ME"/>
-                            <constraint firstItem="hDc-mM-Y8c" firstAttribute="top" secondItem="hFt-cH-JgC" secondAttribute="bottom" constant="8" id="crt-CM-uUI"/>
-                            <constraint firstItem="hFt-cH-JgC" firstAttribute="leading" secondItem="Wla-wY-NOE" secondAttribute="leading" constant="8" id="iuU-l1-Skk"/>
-                            <constraint firstItem="hFt-cH-JgC" firstAttribute="top" secondItem="n6M-Dc-X0e" secondAttribute="bottom" constant="10" id="kb0-6X-kea"/>
-                            <constraint firstItem="KnL-yQ-b2L" firstAttribute="leading" secondItem="hDc-mM-Y8c" secondAttribute="trailing" constant="8" id="qaV-4w-nat"/>
+                            <constraint firstItem="KnL-yQ-b2L" firstAttribute="leading" secondItem="8GU-Vp-ia4" secondAttribute="trailing" constant="8" id="cEE-Oy-cfs"/>
+                            <constraint firstItem="pXU-M9-Tmv" firstAttribute="top" secondItem="8GU-Vp-ia4" secondAttribute="bottom" constant="6" id="cKz-7m-0Bt"/>
+                            <constraint firstItem="8GU-Vp-ia4" firstAttribute="top" secondItem="eYg-Ff-32i" secondAttribute="bottom" constant="8" id="k1L-hC-knw"/>
+                            <constraint firstItem="eYg-Ff-32i" firstAttribute="height" secondItem="8GU-Vp-ia4" secondAttribute="height" id="kA8-iF-qfA"/>
                             <constraint firstItem="pXU-M9-Tmv" firstAttribute="top" secondItem="KnL-yQ-b2L" secondAttribute="bottom" constant="6" id="s8Z-5i-1x2"/>
+                            <constraint firstItem="8GU-Vp-ia4" firstAttribute="leading" secondItem="Wla-wY-NOE" secondAttribute="leading" constant="8" id="zpr-Sy-3g4"/>
                         </constraints>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
@@ -183,9 +187,9 @@
                     </navigationItem>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
-                        <outlet property="primary" destination="hFt-cH-JgC" id="m85-ti-Nj4"/>
+                        <outlet property="primary" destination="eYg-Ff-32i" id="cfH-Nq-9cQ"/>
                         <outlet property="progressIndicator" destination="dGp-8h-fOv" id="aPG-hv-iNV"/>
-                        <outlet property="secondary" destination="hDc-mM-Y8c" id="iIG-hO-IZR"/>
+                        <outlet property="secondary" destination="8GU-Vp-ia4" id="ajX-nN-GgY"/>
                         <outlet property="tableView" destination="KnL-yQ-b2L" id="Mej-Fw-PYd"/>
                     </connections>
                 </viewController>

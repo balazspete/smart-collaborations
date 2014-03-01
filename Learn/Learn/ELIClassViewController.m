@@ -6,10 +6,12 @@
 //  Copyright (c) 2014 Balázs Pete. All rights reserved.
 //
 
+#import "ELIAppDelegate.h"
 #import "ELIClassViewController.h"
 #import "ELISidebar.h"
 #import <RestKit/RestKit.h>
 #import "ELICollaborationTableViewCell.h"
+#import "ELILecturePage.h"
 
 @interface ELIClassViewController () <UIGestureRecognizerDelegate, UITableViewDataSource, UITableViewDelegate>
 
@@ -25,11 +27,52 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)showErrorType:(NSString*)typeDescription withMessage:(NSString*)message
+- (void)showErrorType:(NSString*)typeDescription withMessage:(NSString*)message returnToClasses:(BOOL)returnToPrevious
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:typeDescription message:message delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles: nil];
     [alert show];
-    [self performSelector:@selector(dismissAlertViewAndReturn:) withObject:alert afterDelay:3];
+    
+    if (returnToPrevious) [self performSelector:@selector(dismissAlertViewAndReturn:) withObject:alert afterDelay:3];
+}
+
+- (void)loadImageWithURL:(NSURL*)imageURL intoImageView:(UIImageView*)imageView
+{
+    NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+    if (imageData)
+    {
+        UIImage *image = [UIImage imageWithData:imageData];
+        if (image)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                imageView.image = image;
+            });
+        }
+    }
+}
+
+- (void)showPage:(NSNumber*)pageNumber
+{
+    if (pageNumber.floatValue == [self.lecture.pages count])
+    {
+        [self showErrorType:@"Last Page" withMessage:@"You are on the last page of the lecture." returnToClasses:NO];
+        return;
+    }
+    
+    self.progressIndicator.progress = (pageNumber.floatValue+1)/[self.lecture.pages count];
+    
+    ELILecturePage *page = [_lecture.pages objectAtIndex:pageNumber.integerValue];
+    // Load Primary image
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self loadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BASEURL, page.primaryUrl]] intoImageView:self.primary];
+    });
+    // Load Secondary image
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self loadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BASEURL, page.secondaryUrl]] intoImageView:self.secondary];
+    });
+    // Load collaboration
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        // TODO:
+    });
 }
 
 - (void)loadLecture
@@ -40,14 +83,14 @@
         if ([mappingResult count] > 0)
         {
             _lecture = [[mappingResult array] objectAtIndex:0];
-            self.progressIndicator.progress = 1.0f/[_lecture.pages count];
+            [self showPage:[NSNumber numberWithInt:0]];
         }
         else
         {
-            [self showErrorType:@"Empty lecture" withMessage:@"There haven't been any pages posted yet."];
+            [self showErrorType:@"Empty lecture" withMessage:@"There haven't been any pages posted yet." returnToClasses:YES];
         }
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-        [self showErrorType:@"Connection error" withMessage:error.localizedDescription];
+        [self showErrorType:@"Connection error" withMessage:error.localizedDescription returnToClasses:YES];
     }];
 }
 

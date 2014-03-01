@@ -20,8 +20,8 @@
 
 - (void)didRotate:(NSNotification*)notification;
 
-@property (weak, nonatomic) IBOutlet UIView *primary;
-@property (weak, nonatomic) IBOutlet UIView *secondary;
+@property (weak, nonatomic) IBOutlet UIImageView *primary;
+@property (weak, nonatomic) IBOutlet UIImageView *secondary;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 @end
