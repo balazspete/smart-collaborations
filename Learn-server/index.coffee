@@ -1,5 +1,10 @@
 
 ###
+# IMAGES FOLDER PATH
+###
+global.image_path = "/Users/balazspete/Documents/"
+
+###
 # DECLARATIONS & SETUP
 ###
 express = require 'express'
@@ -9,7 +14,6 @@ global.app = app = express()
 global.db = db = mongoose.createConnection 'mongodb://localhost:27017/learn', {
   server: { auto_reconnect: true }
 }
-global.image_path = "/Users/balazspete/Documents/"
 
 imageHandler = require './handleImage'
 
