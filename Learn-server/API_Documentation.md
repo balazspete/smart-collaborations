@@ -7,15 +7,15 @@ _Returns the list of classes and lectures_
 __Response__
 ```JSON
 {
-  "url": "/classes"
+  "url": "/classes",
   "classes": [
     {
-      "url": "/class/{class id}"
-      "name": "{class name}"
+      "url": "/class/{class id}",
+      "name": "{class name}",
       "lectures": [
         {
-          "url": "/class/{class id}/lecture/{lecture id}"
-          "class": "/class/{class id}"
+          "url": "/class/{class id}/lecture/{lecture id}",
+          "class": "/class/{class id}",
           "time": "{time stamp}"
         } ...
       ]
@@ -31,12 +31,12 @@ __Response__
 ```JSON
 {
   "class": {
-    "url": "/class/{class id}"
-    "name": "{class name}"
+    "url": "/class/{class id}",
+    "name": "{class name}",
     "lectures": [
       {
-        "url": "/class/{class id}/lecture/{lecture id}"
-        "class": "/class/{class id}"
+        "url": "/class/{class id}/lecture/{lecture id}",
+        "class": "/class/{class id}",
         "time": "{time stamp}"
       } ...
     ]
@@ -54,8 +54,8 @@ __Response__
 ```JSON
 {
   "class": {
-    "url": "/class/{class id}"
-    "name": "{class name}"
+    "url": "/class/{class id}",
+    "name": "{class name}",
     "lectures": []
   }
 }
@@ -72,11 +72,11 @@ __Response__
 ```JSON
 {
   "lecture": {
-    "url": "/class/{class id}/lecture/{lecture id}"
-    "class": "/class/{class id}"
-    "name": "{name of the lecture}"
-    "time": "{date of creation}"
-    "image": "{The url to an image or null}"
+    "url": "/class/{class id}/lecture/{lecture id}",
+    "class": "/class/{class id}",
+    "name": "{name of the lecture}",
+    "time": "{date of creation}",
+    "image": "{The url to an image or null}",
     "pages": []
   }
 }
@@ -89,19 +89,19 @@ __Response__
 ```JSON
 {
   "lecture": {
-    "url": "/class/{class id}/lecture/{lecture id}"
-    "class": "/class/{class id}"
-    "name": "{name of the lecture}"
-    "time": "{date of creation}"
-    "image": "{The url to an image or null}"
+    "url": "/class/{class id}/lecture/{lecture id}",
+    "class": "/class/{class id}",
+    "name": "{name of the lecture}",
+    "time": "{date of creation}",
+    "image": "{The url to an image or null}",
     "pages": [
       {
-        "url": "/class/{class id}/lecture/{lecture id}/page/{page id}"
-        "lecture": "/class/{class id}/lecture/{lecture id}"
-        "title": "{Page title}"
-        "time": "{creation time}"
-        "primary": "{A url to an image}"
-        "secondary": "{A url to an image}"
+        "url": "/class/{class id}/lecture/{lecture id}/page/{page id}",
+        "lecture": "/class/{class id}/lecture/{lecture id}",
+        "title": "{Page title}",
+        "time": "{creation time}",
+        "primary": "{A url to an image}",
+        "secondary": "{A url to an image}",
         "collaboration": "{A url to a collaboration object}"
       } ...
     ]
@@ -122,12 +122,12 @@ __Response__
 ```JSON
 {
   "page": {
-    "url": "/class/{class id}/lecture/{lecture id}/page/{page id}"
-    "lecture": "/class/{class id}/lecture/{lecture id}"
-    "title": "{Page title}"
-    "time": "{creation time}"
-    "primary": "{A url to an image or null}"
-    "secondary": "{A url to an image or null}"
+    "url": "/class/{class id}/lecture/{lecture id}/page/{page id}",
+    "lecture": "/class/{class id}/lecture/{lecture id}",
+    "title": "{Page title}",
+    "time": "{creation time}",
+    "primary": "{A url to an image or null}",
+    "secondary": "{A url to an image or null}",
     "collaboration": "{A url to a collaboration object or null}"
   } 
 }
@@ -140,12 +140,12 @@ __Response__
 ```JSON
 {
   "page": {
-    "url": "/class/{class id}/lecture/{lecture id}/page/{page id}"
-    "lecture": "/class/{class id}/lecture/{lecture id}"
-    "title": "{Page title}"
-    "time": "{creation time}"
-    "primary": "{A url to an image or null}"
-    "secondary": "{A url to an image or null}"
+    "url": "/class/{class id}/lecture/{lecture id}/page/{page id}",
+    "lecture": "/class/{class id}/lecture/{lecture id}",
+    "title": "{Page title}",
+    "time": "{creation time}",
+    "primary": "{A url to an image or null}",
+    "secondary": "{A url to an image or null}",
     "collaboration": "{A url to a collaboration object or null}"
   } 
 }
@@ -162,7 +162,7 @@ __Response__
 ```JSON
 {
   "collaboration" : {
-    "url": "/collaboration/{collaboration id}"
+    "url": "/collaboration/{collaboration id}",
     "entries": []
   }
 }
@@ -175,17 +175,17 @@ __Response__
 ```JSON
 {
   "collaboration" : {
-    "url": "/collaboration/{collaboration id}"
+    "url": "/collaboration/{collaboration id}",
     "entries": [
       {
-        "url": "/collaboration/{collaboration id}/entry/{entry id}"
-        "collaboration": "/collaboration/{collaboration id}"
+        "url": "/collaboration/{collaboration id}/entry/{entry id}",
+        "collaboration": "/collaboration/{collaboration id}",
         "creator": {
-          "url": "/user/{user id}"
+          "url": "/user/{user id}",
           "name": "{user name}"
         }
-        "time": "{creation time}"
-        "body": "{entry text or null}"
+        "time": "{creation time}",
+        "body": "{entry text or null}",
         "image": "{image url or null}"
       } ...
     ]
@@ -205,14 +205,14 @@ __Response__
 ``` JSON
 {
   "collaborationEntry": {
-    "url": "/collaboration/{collaboration id}/entry/{entry id}"
-    "collaboration": "/collaboration/{collaboration id}"
+    "url": "/collaboration/{collaboration id}/entry/{entry id}",
+    "collaboration": "/collaboration/{collaboration id}",
     "creator": {
-      "url": "/user/{user id}"
+      "url": "/user/{user id}",
       "name": "{user name}"
     }
-    "time": "{creation time}"
-    "body": "{entry text or null}"
+    "time": "{creation time}",
+    "body": "{entry text or null}",
     "image": "{image url or null}"
   }
 }
