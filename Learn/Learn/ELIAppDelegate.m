@@ -12,12 +12,26 @@
 #import "ELIClass.h"
 #import "ELILecture.h"
 #import "ELILecturePage.h"
+#import "ELICollaborationEntry.h"
+#import "ELIUser.h"
+
+static ELIUser* user;
 
 @implementation ELIAppDelegate
 
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+
++ (ELIUser*) getUser
+{
+    return user;
+}
+
++ (void) setUser:(ELIUser*)_user
+{
+    user = _user;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -44,7 +58,7 @@
         @"title": @"title",
         @"primary": @"primaryUrl",
         @"secondary": @"secondaryUrl",
-        @"notes": @"notesUrl"
+        @"collaboration": @"collaborationUrl"
     }];
     
     // Describe lectures
@@ -74,6 +88,29 @@
 
     RKResponseDescriptor *lectureResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:lectureMapping method:RKRequestMethodGET pathPattern:@"/class/:classid/lecture/:lectureid" keyPath:@"lecture" statusCodes:[NSIndexSet indexSetWithIndex:200]];
     [objectManager addResponseDescriptor:lectureResponseDescriptor];
+    
+    RKObjectMapping *userMapping = [RKObjectMapping mappingForClass:[ELIUser class]];
+    [userMapping addAttributeMappingsFromDictionary:@{
+        @"url": @"url",
+        @"name": @"name"
+    }];
+    
+    RKObjectMapping *collaborationEntryMapping = [RKObjectMapping mappingForClass:[ELICollaborationEntry class]];
+    [collaborationEntryMapping addAttributeMappingsFromDictionary:@{
+        @"url": @"url",
+        @"body": @"text",
+        @"image": @"imageURL",
+        @"time": @"date"
+    }];
+    
+    RKRelationshipMapping *creatorToCollaborationEntryMapping = [RKRelationshipMapping relationshipMappingFromKeyPath:@"creator" toKeyPath:@"creator" withMapping:userMapping];
+    [collaborationEntryMapping addPropertyMapping:creatorToCollaborationEntryMapping];
+    
+    RKResponseDescriptor *collabrationResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:collaborationEntryMapping method:RKRequestMethodGET pathPattern:@"/collaboration/:id" keyPath:@"collaboration" statusCodes:[NSIndexSet indexSetWithIndex:200]];
+    [objectManager addResponseDescriptor:collabrationResponseDescriptor];
+    
+    RKResponseDescriptor *createUserResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userMapping method:RKRequestMethodPOST pathPattern:@"/user" keyPath:@"user" statusCodes:[NSIndexSet indexSetWithIndex:200]];
+    [objectManager addResponseDescriptor:createUserResponseDescriptor];
     
     return YES;
 }

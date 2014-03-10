@@ -14,11 +14,9 @@
 
 + (float) getOverlayAlpha;
 
-- (ELISidebar *)initWithinView:(UIView*)parentView;
+- (ELISidebar *)initWithinController:(UIViewController*)controller;
 
-- (ELISidebar *)initWithinView:(UIView*)parentView considerNavigationBar:(UINavigationBar*)navigationBar;
-
-- (void)readjustFrameWithinView:(UIView*)parentView considerNavigationBar:(UINavigationBar*)navigationBar;
+- (void)readjustFrameWithinController:(UIViewController*)controller;
 
 - (void)showSidebar;
 

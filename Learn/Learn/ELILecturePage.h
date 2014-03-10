@@ -14,6 +14,6 @@
 @property NSString *title;
 @property NSString *primaryUrl;
 @property NSString *secondaryUrl;
-@property NSString *notesUrl;
+@property NSString *collaborationUrl;
 
 @end

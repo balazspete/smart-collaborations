@@ -42,26 +42,19 @@
     return self;
 }
 
-- (ELISidebar *)initWithinView:(UIView*)parentView
-{
-    return [self initWithinView:parentView considerNavigationBar:nil];
-}
-
-- (ELISidebar *)initWithinView:(UIView*)parentView considerNavigationBar:(UINavigationBar*)navigationBar
+- (ELISidebar *)initWithinController:(UIViewController*)controller
 {
     
-    self = [self initWithFrame:parentView.bounds];
+    self = [self initWithFrame:controller.view.frame];
     
-    int yOffset = navigationBar.bounds.size.height;
-    
-    _overlay = [[UIView alloc] initWithFrame:[self getOverlayBoundsWithinView:parentView]];
+    _overlay = [[UIView alloc] initWithFrame:[self getOverlayBoundsWithinController:controller]];
     _overlay.backgroundColor = [UIColor blackColor];
     [_overlay setAlpha:0];
     [_overlay setHidden:YES];
     
     _singleFingerTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapOnOverlay:)];
     
-    _sidebar = [[UIView alloc] initWithFrame:[self getToolbarSizeWithinView:parentView withVerticalOffset:yOffset]];
+    _sidebar = [[UIView alloc] initWithFrame:[self getToolbarSizeWithinController:controller]];
     _sidebar.backgroundColor = [UIColor clearColor];
     
     _backgroundToolbar = [[UIToolbar alloc] initWithFrame:_sidebar.frame];
@@ -69,35 +62,48 @@
     [_backgroundToolbar setTranslucent:YES];
     [_backgroundToolbar setHidden:YES];
     
-    [parentView insertSubview:_overlay aboveSubview:parentView];
-    [parentView insertSubview:_backgroundToolbar aboveSubview:_overlay];
+    [controller.view insertSubview:_overlay aboveSubview:controller.view];
+    [controller.view insertSubview:_backgroundToolbar aboveSubview:_overlay];
     
     return self;
 }
 
-- (CGRect)getOverlayBoundsWithinView:(UIView*)parentView
+- (CGRect)getOverlayBoundsWithinController:(UIViewController*)controller
 {
-    CGRect overlayBounds = parentView.frame;
+    CGRect overlayBounds = controller.navigationController.view.frame;
+    if (UIInterfaceOrientationIsLandscape(controller.interfaceOrientation))
+    {
+        float height = overlayBounds.size.height;
+        overlayBounds.size.height = MIN(overlayBounds.size.height, overlayBounds.size.width);
+        overlayBounds.size.width = MAX(height, overlayBounds.size.width);
+    }
+    
     overlayBounds.size.width = overlayBounds.size.width - [ELISidebar sidebarWidth];
     return overlayBounds;
 }
 
-- (CGRect)getToolbarSizeWithinView:(UIView*)parentView withVerticalOffset:(int)yOffset
+- (CGRect)getToolbarSizeWithinController:(UIViewController*)controller
 {
     int sidebarWidth = ELISidebar.sidebarWidth;
-    CGSize collectionViewSize = parentView.bounds.size;
-    CGRect sidebarSize =  parentView.bounds;
     
-    sidebarSize = CGRectMake(collectionViewSize.width-sidebarWidth, 0, sidebarWidth, collectionViewSize.height);
+    CGSize viewSize = controller.navigationController.view.frame.size;
+    if (UIInterfaceOrientationIsLandscape(controller.interfaceOrientation))
+    {
+        float height = viewSize.height;
+        viewSize.height = MIN(viewSize.height, viewSize.width);
+        viewSize.width = MAX(height, viewSize.width);
+    }
     
+    CGRect sidebarSize = CGRectMake(viewSize.width-sidebarWidth, 0, sidebarWidth, viewSize.height);
     return sidebarSize;
 }
 
-- (void)readjustFrameWithinView:(UIView*)parentView considerNavigationBar:(UINavigationBar*)navigationBar
+- (void)readjustFrameWithinController:(UIViewController*)controller
 {
-    [self setFrame:parentView.frame];
-    [_backgroundToolbar setFrame:[self getToolbarSizeWithinView:parentView withVerticalOffset:navigationBar.bounds.size.height]];
-    [_overlay setFrame:[self getOverlayBoundsWithinView:parentView]];
+    CGRect toolbarSize = [self getToolbarSizeWithinController:controller];
+    [_backgroundToolbar setFrame:toolbarSize];
+    [_sidebar setFrame:toolbarSize];
+    [_overlay setFrame:[self getOverlayBoundsWithinController:controller]];
 }
 
 

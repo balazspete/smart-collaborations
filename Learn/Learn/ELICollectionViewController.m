@@ -80,7 +80,7 @@
     [swipeLeft setDelegate:self];
     [self.view addGestureRecognizer:swipeLeft];
     
-    _sidebar = [[ELISidebar alloc] initWithinView:self.collectionView considerNavigationBar:self.navigationController.navigationBar];
+    _sidebar = [[ELISidebar alloc] initWithinController:self];
 
     if (self.collectionData != nil) {
         // Initialize to a blank one...
@@ -93,6 +93,8 @@
         [self.collectionView addSubview:_indicator];
         [_indicator startAnimating];
     }
+    
+    
     
     [self loadClasses];
 }
@@ -210,10 +212,17 @@
     [self showSidebar];
 }
 
+- (IBAction)dismissController:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+}
+
 - (void)didRotate:(NSNotification*)notification
 {
     // Resize when rotated
-    [_sidebar readjustFrameWithinView:self.collectionView considerNavigationBar:self.navigationController.navigationBar];
+    [_sidebar readjustFrameWithinController:self];
 }
 
 - (void)showSidebar

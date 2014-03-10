@@ -12,6 +12,8 @@
 @interface ELIClassViewController : UIViewController
 
 @property ELILecture *lecture;
+@property int currentPage;
+@property bool showPageTitle;
 
 @property (weak, nonatomic) IBOutlet UIProgressView *progressIndicator;
 
@@ -20,8 +22,12 @@
 
 - (void)didRotate:(NSNotification*)notification;
 
+- (void)swapTitle;
+
 @property (weak, nonatomic) IBOutlet UIImageView *primary;
 @property (weak, nonatomic) IBOutlet UIImageView *secondary;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *nextButton;
 
 @end
