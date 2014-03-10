@@ -22,7 +22,8 @@ api = require './api'
 app.use express.bodyParser()
 
 sendError = (res, error) ->
-  res.status(500).send('An error occurred');
+  console.log error
+  res.status(500).send(error);
 
 ###
 # THE API
@@ -165,14 +166,15 @@ app.post '/collaboration', (req, res) ->
 app.post '/collaboration/:id', (req, res) ->
   url = "/collaboration/#{req.route.params['id']}"
   
+  console.log req.body
   user = req.body.user
   return sendError(res, "Null user") unless user
 
   body = req.body.body
   image = req.body.image
-  return sendError(res, "Null content") unless body is null or image is null
+  return sendError(res, "Null content") if body is null or image is null
 
-  api.addCollaborationEntry url, (err, result) ->
+  api.createCollaborationEntry url, user, body, image, (err, result) ->
     return sendError(res, err) if err
     return res.status(404).send('Not found') unless result   
 
@@ -214,6 +216,18 @@ app.post '/image/:id', (req, res) ->
 
       res.setHeader 'Content-Type', 'application/json'
       res.send response
+
+app.post '/user', (req, res) ->
+  name = req.body.name
+  return sendError(res, "No name given") unless name
+  api.createUser name, (err, result) ->
+    return sendError(res, err) if err
+
+    response =
+      user: result    
+
+    res.setHeader 'Content-Type', 'application/json'
+    res.send response
 
 port = 80
 app.listen port

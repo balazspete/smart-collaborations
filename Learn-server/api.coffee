@@ -74,21 +74,39 @@ module.exports.updatePage = (url, title, primary, secondary, collaboration, call
 module.exports.getCollaboration = (url, callback) ->
   models.collaboration
     .findOne({ url: url })
-    .populate('CollaborationEntry')
-    .exec callback
+    .populate('entries')
+    .exec (err, result) ->
+      return callback(err) if err
+      models.collaboration_entry.populate result.entries, {path: 'creator'}, (_err, result) ->
+        return callback(_err) if _err
+        callback null, result
 
 module.exports.createCollaboration = (callback) ->
   c = new models.collaboration()
   c.save callback
 
 module.exports.createCollaborationEntry = (collaboration, user, body, image, callback) ->
-  e = new models.collaboration_entry {
-    collaboration: collaboration
-    creator: user
-    body: body
-    image: image
-  }
-  e.save callback
+  models.user
+    .findOne({ "url": user })
+    .exec (err, result) ->
+      return callback(err) if err
+      e = new models.collaboration_entry {
+        collaboration: collaboration
+        creator: result._id
+        body: body
+        image: image
+      }
+      e.save (_err, _result) ->
+        return callback(_err) if _err
+        models.collaboration
+          .findOne({ url: collaboration })
+          .exec (e, r) ->
+            return callback(e) if e
+            console.log r
+            r.entries.push _result._id
+            r.save (_e, _r) ->
+              return callback(_e) if _e
+              callback null, _result
 
 module.exports.createImage = (path, callback) ->
   i = new models.image {
@@ -106,4 +124,8 @@ module.exports.getImage = (url, callback) ->
     .findOne({ url: url })
     .exec callback
 
-
+module.exports.createUser = (name, callback) ->
+  i = new models.user {
+    name: name
+  }
+  i.save callback
