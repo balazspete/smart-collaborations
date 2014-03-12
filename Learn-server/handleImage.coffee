@@ -9,8 +9,8 @@ createHashID = ->
 module.exports = (file, callback) ->
   return callback("No `image` file. Make sure the `image` field is being set.") unless file
 
-  path = path.normalize "#{global.image_path}#{createHashID()}_#{file.name}"
-  fs.rename file.path, path, (error) ->
+  p = path.normalize "#{global.image_path}#{createHashID()}_#{file.name}"
+  fs.rename file.path, p, (error) ->
     return callback(error) if error
     callback null, path
 
