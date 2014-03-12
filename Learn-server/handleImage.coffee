@@ -10,10 +10,10 @@ module.exports = (file, callback) ->
   return callback("No `image` file. Make sure the `image` field is being set.") unless file
 
   _path = path.normalize("#{global.image_path}#{createHashID()}_#{file.name}")
-  is = fs.createReadStream file.path
-  os = fs.createWriteStream _path
+  input = fs.createReadStream file.path
+  output = fs.createWriteStream _path
 
-  is.pipe os
-  is.on 'end', ->
+  input.pipe output
+  input.on 'end', ->
     fs.unlinkSync file.path
     callback null, _path
