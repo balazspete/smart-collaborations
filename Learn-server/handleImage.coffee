@@ -9,8 +9,11 @@ createHashID = ->
 module.exports = (file, callback) ->
   return callback("No `image` file. Make sure the `image` field is being set.") unless file
 
-  p = path.normalize("#{global.image_path}#{createHashID()}_#{file.name}")
-  fs.rename file.path, p, (error) ->
-    return callback(error) if error
-    callback null, path
+  _path = path.normalize("#{global.image_path}#{createHashID()}_#{file.name}")
+  is = fs.createReadStream file.path
+  os = fs.createWriteStream _path
 
+  is.pipe os
+  is.on 'end', ->
+    fs.unlinkSync file.path
+    callback null, _path
