@@ -172,7 +172,7 @@ app.post '/collaboration/:id', (req, res) ->
 
   body = req.body.body
   image = req.body.image
-  return sendError(res, "Null content") if body is null or image is null
+  return sendError(res, "Null content") unless body or image
 
   api.createCollaborationEntry url, user, body, image, (err, result) ->
     return sendError(res, err) if err
@@ -196,11 +196,12 @@ app.post '/image', (req, res) ->
     api.createImage path, (err, result) ->
       return sendError(res, "failed to create image") unless result
 
-      response = 
-        image: result
-        uploaded: true
+      # response = 
+      #   image: result
+      #   uploaded: true
+      response = result.url
 
-      res.setHeader 'Content-Type', 'application/json'
+      res.setHeader 'Content-Type', 'text/plain'#'application/json'
       res.send response
 
 app.post '/image/:id', (req, res) ->

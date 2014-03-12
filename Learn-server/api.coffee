@@ -79,7 +79,8 @@ module.exports.getCollaboration = (url, callback) ->
       return callback(err) if err
       models.collaboration_entry.populate result.entries, {path: 'creator'}, (_err, result) ->
         return callback(_err) if _err
-        callback null, result
+        console.log result
+        callback null, { url: url, entries: result }
 
 module.exports.createCollaboration = (callback) ->
   c = new models.collaboration()
@@ -100,13 +101,17 @@ module.exports.createCollaborationEntry = (collaboration, user, body, image, cal
         return callback(_err) if _err
         models.collaboration
           .findOne({ url: collaboration })
+          .populate('creator')
           .exec (e, r) ->
             return callback(e) if e
             console.log r
             r.entries.push _result._id
             r.save (_e, _r) ->
               return callback(_e) if _e
-              callback null, _result
+              models.collaboration_entry
+                .findOne({url: _result.url})
+                .populate('creator')
+                .exec callback
 
 module.exports.createImage = (path, callback) ->
   i = new models.image {
