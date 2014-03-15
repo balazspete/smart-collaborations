@@ -12,15 +12,20 @@
 #import <RestKit/RestKit.h>
 #import "ELICollaborationTableViewCell.h"
 #import "ELILecturePage.h"
+#import "ELICollaboration.h"
 #import "ELICollaborationEntry.h"
+#import "ELICollaborationEntryViewController.h"
+#import <AFNetworking/AFNetworking.h>
 
 @interface ELIClassViewController () <UIGestureRecognizerDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property ELISidebar *sidebar;
 @property RKObjectManager *objectManager;
-@property NSArray *collaborationEntries;
+@property NSMutableArray *collaborationEntries;
 @property NSDateFormatter *dateFormat;
 @property NSDateFormatter *timeFormat;
+
+@property ELICollaborationEntry *selectedCollaborationEntry;
 
 @end
 
@@ -40,7 +45,7 @@
     if (returnToPrevious) [self performSelector:@selector(dismissAlertViewAndReturn:) withObject:alert afterDelay:3];
 }
 
-- (void)loadImageWithURL:(NSURL*)imageURL intoImageView:(UIImageView*)imageView withAsynchronousDispatch:(bool)async
+- (void)loadImageWithURL:(NSURL*)imageURL intoImageView:(UIImageView*)imageView withAsynchronousDispatch:(bool)async addToEntry:(ELICollaborationEntry*) entry
 {
     NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
     if (imageData)
@@ -59,50 +64,80 @@
                 imageView.image = image;
             }
         }
+        
+        if (entry)
+        {
+            entry.image = imageData;
+        }
     }
 }
 
-- (void)loadCollaborationWithURL:(NSString*)collaborationURL
+- (void)loadCollaborationWithURL:(NSString*)collaborationURL allowFutureChecks:(bool)futureChecks
 {
-    if (!collaborationURL)
-    {
+    if (((ELILecturePage*)[self.lecture.pages objectAtIndex:self.currentPage]).collaborationUrl != collaborationURL){
         return;
     }
     
-    [_objectManager getObjectsAtPath:collaborationURL parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult){
+    [self.objectManager getObjectsAtPath:collaborationURL parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult){
+        self.collaborationEntries = [NSMutableArray arrayWithArray:mappingResult.array];
+        [self.tableView reloadData];
         
-        _collaborationEntries = [NSArray arrayWithArray:mappingResult.array];
-        [_tableView reloadData];
+        if (futureChecks)
+        {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3*NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                    [self loadCollaborationWithURL:collaborationURL allowFutureChecks:futureChecks];
+                });
+        }
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error.description);
     }];
-    
-    
 }
 
 - (void)showPage:(NSNumber*)pageNumber
 {
-    if (pageNumber.floatValue == [self.lecture.pages count])
+    NSLog(@"Original: %d, Page: %f", self.currentPage, pageNumber.floatValue);
+    if (pageNumber.floatValue < 0)
+    {
+        [self showErrorType:@"First Page" withMessage:@"You are on the first page of the lecture." returnToClasses:NO];
+        return;
+    }
+    else if (pageNumber.floatValue >= [self.lecture.pages count])
     {
         [self showErrorType:@"Last Page" withMessage:@"You are on the last page of the lecture." returnToClasses:NO];
         return;
     }
     
+    if (self.currentPage != pageNumber.integerValue)
+    {
+        self.collaborationEntries = [[NSMutableArray alloc] init];
+        [self.tableView reloadData];
+    }
+    
+    self.currentPage = pageNumber.intValue;
     self.progressIndicator.progress = (pageNumber.floatValue+1)/[self.lecture.pages count];
     
     ELILecturePage *page = [_lecture.pages objectAtIndex:pageNumber.integerValue];
     // Load Primary image
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self loadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BASEURL, page.primaryUrl]] intoImageView:self.primary withAsynchronousDispatch:YES];
-    });
+    if (page.primaryUrl.length)
+    {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [self loadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BASEURL, page.primaryUrl]] intoImageView:self.primary withAsynchronousDispatch:YES addToEntry:nil];
+        });
+    }
     // Load Secondary image
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self loadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BASEURL, page.secondaryUrl]] intoImageView:self.secondary withAsynchronousDispatch:YES];
-    });
+    if (page.secondaryUrl.length)
+    {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [self loadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BASEURL, page.secondaryUrl]] intoImageView:self.secondary withAsynchronousDispatch:YES addToEntry:nil];
+        });
+    }
     // Load collaboration
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self loadCollaborationWithURL:page.collaborationUrl];
-    });
+    if (page.collaborationUrl.length)
+    {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [self loadCollaborationWithURL:page.collaborationUrl allowFutureChecks:YES];
+        });
+    }
 }
 
 - (void)loadLecture
@@ -110,12 +145,25 @@
     _objectManager = [RKObjectManager sharedManager];
     [_objectManager getObjectsAtPath:_lecture.url parameters:nil
     success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult){
-        if ([mappingResult count] > 0)
+        bool initial = self.lecture.pages.count;
+        self.lecture = [[mappingResult array] objectAtIndex:0];
+        if ([self.lecture.pages count] > 0)
         {
-            _lecture = [[mappingResult array] objectAtIndex:0];
-            self.currentPage = 0;
-            [self showPage:[NSNumber numberWithInt:self.currentPage]];
-            [self swapTitle];
+            if (!initial)
+            {
+                [self showPage:[NSNumber numberWithInt:0]];
+                [self swapTitle];
+            }
+            else
+            {
+                self.progressIndicator.progress = ((float)self.currentPage+1)/self.lecture.pages.count;
+                [self showPage:[NSNumber numberWithInt:self.currentPage]];
+            }
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC*10), dispatch_get_main_queue(), ^{
+                NSLog(@"Refreshing lecture!");
+                [self loadLecture];
+            });
         }
         else
         {
@@ -165,6 +213,8 @@
     _dateFormat = [[NSDateFormatter alloc] init];
     [_dateFormat setDateFormat:@"dd MMMM yyyy"];
     
+    self.tableView.contentInset = UIEdgeInsetsMake(20.0f, 0.0f, 0.0f, 0.0f);
+    
     [self loadLecture];
 }
 
@@ -198,8 +248,9 @@
 
 - (void)swapTitle
 {
-    if (self.showPageTitle) {
-        self.title = ((ELILecturePage*)[self.lecture.pages objectAtIndex:self.currentPage]).title;
+    ELILecturePage *page = (ELILecturePage*)[self.lecture.pages objectAtIndex:self.currentPage];
+    if (page && self.showPageTitle) {
+        self.title = page.title;
     } else {
         self.title = self.lecture.name;
     }
@@ -220,61 +271,95 @@
 {
     ELICollaborationEntry *entry = (ELICollaborationEntry*) [_collaborationEntries objectAtIndex:indexPath.row];
     
-    bool text = entry.text != nil, image = entry.imageURL != nil;
+    bool text = entry.text != nil, image = entry.imageURL != nil || entry.image != nil;
     ELICollaborationTableViewCell *cell;
     
-    if (text)
+    if (image)
     {
-        if (image)
+        if (text)
         {
             cell = [_tableView dequeueReusableCellWithIdentifier:@"CollaborationHybridCell"];
+            cell.textField.text = entry.text;
         }
         else
         {
-            cell = [_tableView dequeueReusableCellWithIdentifier:@"CollaborationTextCell"];
+            cell = [_tableView dequeueReusableCellWithIdentifier:@"CollaborationImageCell"];
         }
-        cell.textView.text = entry.text;
-        [cell.textView setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:18]];
+        
+        if (!entry.image)
+        {
+            [self loadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BASEURL, entry.imageURL]] intoImageView:cell.imageView withAsynchronousDispatch:NO addToEntry:entry];
+        }
+        else
+        {
+            NSLog(@"HERE, loading from memory...");
+            cell.imageView.image = [[UIImage alloc] initWithData:entry.image];
+        }
+        
+        [cell.imageView setAutoresizingMask:UIViewAutoresizingNone];
+        [cell.imageView setClipsToBounds:YES];
     }
     else
     {
-        cell = [_tableView dequeueReusableCellWithIdentifier:@"CollaborationImageCell"];
+        cell = [_tableView dequeueReusableCellWithIdentifier:@"CollaborationTextCell"];
+        cell.textField.text = entry.text;
     }
+    
     
     cell.userLabel.text = entry.creator.name;
     [cell.userLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:11]];
     [cell.userLabel sizeToFit];
     
-    cell.dateLabel.text = [NSString stringWithFormat:@"Posted at %@ on %@", [_timeFormat stringFromDate:entry.date], [_dateFormat stringFromDate:entry.date]];
+    if (entry.date)
+    {
+        cell.dateLabel.text = [NSString stringWithFormat:@"Posted at %@ on %@", [_timeFormat stringFromDate:entry.date], [_dateFormat stringFromDate:entry.date]];
+    }
+    else
+    {
+        cell.dateLabel.text = @"Uploading...";
+    }
     [cell.dateLabel setFont:[UIFont fontWithName:@"HelveticaNeue-LightItalic" size:11]];
     [cell.dateLabel sizeToFit];
     
-    if (image)
-    {
-        [self loadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BASEURL, entry.imageURL]] intoImageView:cell.imageView withAsynchronousDispatch:NO];
-        [cell.imageView setAutoresizingMask:UIViewAutoresizingNone];
-        [cell.imageView setClipsToBounds:YES];
-    }
     
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"selected");
-    
-    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    
+    _selectedCollaborationEntry = [_collaborationEntries objectAtIndex:indexPath.row];
+    [self performSegueWithIdentifier:@"CollaborationEntry" sender:tableView];
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100;
+    ELICollaborationEntry *entry = [_collaborationEntries objectAtIndex:indexPath.row];
+    if (entry.imageURL)
+    {
+        if (entry.text && entry.text.length)
+        {
+            return 130;
+        }
+        return 100;
+    }
+    
+    return 61;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    ((ELIClassViewController*)[segue destinationViewController]).lecture = self.lecture;
+    if (sender == [self nextButton])
+    {
+        ((ELIClassViewController*)[segue destinationViewController]).lecture = self.lecture;
+    }
+    else if (sender == _tableView)
+    {
+        ((ELICollaborationEntryViewController*)[segue destinationViewController]).collaborationEntry = _selectedCollaborationEntry;
+    }
+    
     return;
 }
 
@@ -282,12 +367,157 @@
 {
     if (sender == [self nextButton])
     {
-        self.currentPage += 1;
-        [self showPage:[NSNumber numberWithInt:self.currentPage]];
+        [self showPage:[NSNumber numberWithInt:(self.currentPage+1)]];
         return false;
     }
     
     return true;
 }
+
+- (void)sidebarAddEntry
+{
+    [_sidebar hideSidebar];
+    [self performSegueWithIdentifier:@"CreateCollaborationEntry" sender:_sidebar];
+}
+
+- (void)createNewCollaborationEntry:(NSString*)text withImage:(UIImage*)image
+{
+    ELICollaborationEntry *entry = [[ELICollaborationEntry alloc] init];
+    [entry setText:text];
+    
+    ELIUser *user = [ELIAppDelegate getUser];
+    [entry setCreator:user];
+    
+    [self.collaborationEntries addObject:entry];
+    
+    if (image)
+    {
+        NSData *imageData = UIImageJPEGRepresentation(image, 0.7);
+        [entry setImage:imageData];
+    
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self uploadCollaborationEntryImage:entry];
+        });
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self proceedWithCollaborationEntryCreation:entry];
+        });
+    }
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[NSNumber numberWithLong:self.collaborationEntries.count-1].intValue inSection:[NSNumber numberWithInt:0].integerValue];
+    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
+//    [self.tableView reloadData];
+}
+
+- (void)proceedWithCollaborationEntryCreation:(ELICollaborationEntry*)entry
+{
+    ELILecturePage *page = [self.lecture.pages objectAtIndex:self.currentPage];
+
+    if (!page.collaborationUrl || !page.collaborationUrl.length)
+    {
+        [self.objectManager postObject:nil path:@"/collaboration" parameters:@{} success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+            ELICollaboration *collaboration = [mappingResult.array objectAtIndex:0];
+            if (!collaboration)
+            {
+                [self collaborationEntryCreationFailure];
+                return;
+            }
+            
+            NSLog(@"Created collaboration: %@", collaboration.url);
+            
+            
+            
+            ((ELILecturePage*)[self.lecture.pages objectAtIndex:self.currentPage]).collaborationUrl = collaboration.url;
+            [self completeCollaborationEntryCreation:entry collaborationURL:collaboration.url];
+        } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+            [self collaborationEntryCreationFailure];
+        }];
+        return;
+    }
+    
+    [self completeCollaborationEntryCreation:entry collaborationURL:page.collaborationUrl];
+}
+
+- (void)completeCollaborationEntryCreation:(ELICollaborationEntry*)entry collaborationURL:(NSString*)collaborationURL
+{
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    [params setObject:entry.creator.url forKey:@"user"];
+    
+    if (entry.text)
+    {
+        [params setObject:entry.text forKey:@"body"];
+    }
+    
+    if (entry.imageURL)
+    {
+        [params setObject:entry.imageURL forKey:@"image"];
+    }
+    
+    [self.objectManager postObject:nil path:collaborationURL parameters:params success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        ELICollaborationEntry *entry = [mappingResult.array firstObject];
+        if (!entry)
+        {
+            [self collaborationEntryCreationFailure];
+        }
+        else
+        {
+            [self collaborationEntryCreationSuccess:entry];
+        }
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        [self collaborationEntryCreationFailure];
+    }];
+    
+}
+
+- (void)collaborationEntryCreationSuccess:(ELICollaborationEntry*)entry
+{
+    unsigned long index = self.collaborationEntries.count-1;
+    [self.collaborationEntries replaceObjectAtIndex:index withObject:entry];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[NSNumber numberWithLong:index].intValue inSection:[NSNumber numberWithInt:0].integerValue];
+    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+}
+
+- (void)collaborationEntryCreationFailure
+{
+    // show fail
+    NSLog(@"We failed");
+}
+
+- (void)uploadCollaborationEntryImage:(ELICollaborationEntry*)entry
+{
+    NSLog(@"Starting upload...");
+    
+    AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:BASEURL]];
+    [client setDefaultHeader:@"Accept" value:@"application/json"];
+    
+    NSMutableURLRequest *request = [client multipartFormRequestWithMethod:@"POST" path:@"/image" parameters:nil constructingBodyWithBlock:^(id <AFMultipartFormData>formData){
+        NSString *name = @"image";
+        [formData appendPartWithFileData:entry.image name:name fileName:name mimeType:@"image/jpeg"];
+    }];
+    
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    [operation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+         NSLog(@"Sent %lld of %lld bytes", totalBytesWritten, totalBytesExpectedToWrite);
+    }];
+    
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"UPLOADED: %@", operation.responseString);
+        [entry setImageURL:operation.responseString];
+        
+        [self proceedWithCollaborationEntryCreation:entry];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self collaborationEntryCreationFailure];
+    }];
+    
+    [operation start];
+}
+
+- (void)goBackAPage
+{
+    [self showPage:[NSNumber numberWithInt:(self.currentPage-1)]];
+}
+
 
 @end

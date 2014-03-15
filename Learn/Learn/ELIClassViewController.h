@@ -24,6 +24,8 @@
 
 - (void)swapTitle;
 
+- (void)createNewCollaborationEntry:(NSString*)text withImage:(UIImage*)image;
+
 @property (weak, nonatomic) IBOutlet UIImageView *primary;
 @property (weak, nonatomic) IBOutlet UIImageView *secondary;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;

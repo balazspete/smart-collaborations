@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ELIUser.h"
 
-#define BASEURL @"http://192.168.1.1"
+#define BASEURL @"http://54.195.7.61"
 
 @interface ELIAppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -19,8 +19,10 @@
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
-+ (ELIUser*) getUser;
-+ (void) setUser:(ELIUser*)user;
++ (ELIUser*)getUser;
++ (void)setUser:(ELIUser*)user;
++ (bool)isLecturer;
++ (void)isLecturer:(bool)status;
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;

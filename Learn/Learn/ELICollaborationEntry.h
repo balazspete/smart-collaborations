@@ -17,4 +17,6 @@
 @property NSString *imageURL;
 @property NSDate *date;
 
+@property NSData *image;
+
 @end

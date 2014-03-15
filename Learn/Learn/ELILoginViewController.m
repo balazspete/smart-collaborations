@@ -34,21 +34,17 @@
 {
     if (sender == self.logInButton)
     {
-        NSRecursiveLock *lock = [[NSRecursiveLock alloc] init];
-        [lock lock];
-        
-        NSString *name = self.userNameField.text;
-        [[RKObjectManager sharedManager] postObject:nil path:@"/user" parameters:@{@"name":name} success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-            [ELIAppDelegate setUser:((ELIUser*)[mappingResult.array objectAtIndex:0])];
-            [lock unlock];
-        } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-            // show an alert...
-        }];
-        
-        [lock lock];
-        NSLog(@"%@", [ELIAppDelegate getUser].name);
         if (![ELIAppDelegate getUser])
         {
+            NSString *name = self.userNameField.text;
+            [[RKObjectManager sharedManager] postObject:nil path:@"/user" parameters:@{@"name":name} success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                
+                [ELIAppDelegate setUser:((ELIUser*)[mappingResult.array objectAtIndex:0])];
+                [ELIAppDelegate isLecturer:self.lecturerSwitch.isOn];
+                [self performSegueWithIdentifier:@"LoginSegue" sender:self];
+            } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                
+            }];
             return false;
         }
     }

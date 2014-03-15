@@ -7,10 +7,10 @@
 //
 
 #import "ELISidebar.h"
+#import "ELIClassViewController.h"
 
 @interface ELISidebar ()
 
-@property UIView *sidebar;
 @property UIToolbar* backgroundToolbar;
 @property UIView *overlay;
 @property UITapGestureRecognizer *singleFingerTap;
@@ -23,7 +23,7 @@
 
 + (int)sidebarWidth
 {
-    return 100;
+    return 80;
 }
 
 + (float) getOverlayAlpha
@@ -54,16 +54,36 @@
     
     _singleFingerTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapOnOverlay:)];
     
-    _sidebar = [[UIView alloc] initWithFrame:[self getToolbarSizeWithinController:controller]];
-    _sidebar.backgroundColor = [UIColor clearColor];
-    
-    _backgroundToolbar = [[UIToolbar alloc] initWithFrame:_sidebar.frame];
-    _backgroundToolbar.barStyle = UIBarStyleDefault;
+    _backgroundToolbar = [[UIToolbar alloc] initWithFrame:[self getToolbarSizeWithinController:controller]];
     [_backgroundToolbar setTranslucent:YES];
     [_backgroundToolbar setHidden:YES];
     
-    [controller.view insertSubview:_overlay aboveSubview:controller.view];
-    [controller.view insertSubview:_backgroundToolbar aboveSubview:_overlay];
+    [controller.view insertSubview:_overlay atIndex:[controller.view.subviews count]];
+    [controller.view insertSubview:_backgroundToolbar atIndex:[controller.view.subviews count]];
+    
+    int yOffset = 0;
+    
+    if ([controller class] == [ELIClassViewController class])
+    {
+        UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(10, yOffset + 70, 50, 50)];
+        yOffset += 70;
+        
+        [backButton setImage:[UIImage imageNamed:@"back-512.png"] forState:UIControlStateNormal];
+        [backButton setTintColor:[UIColor blueColor]];
+// Disable compiler warnings for this section, the selectors exist
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
+        [backButton addTarget:controller action:@selector(goBackAPage) forControlEvents:UIControlEventTouchDown];
+        [_backgroundToolbar addSubview:backButton];
+    }
+    
+    UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(10, yOffset + 70, 60, 60)];
+    [addButton setImage:[UIImage imageNamed:@"plus-512.png"] forState:UIControlStateNormal];
+    [addButton setTintColor:[UIColor blueColor]];
+    [addButton addTarget:controller action:@selector(sidebarAddEntry) forControlEvents:UIControlEventTouchDown];
+    [_backgroundToolbar addSubview:addButton];
+#pragma clang diagnostic pop
+    [self readjustFrameWithinController:controller];
     
     return self;
 }
@@ -102,7 +122,6 @@
 {
     CGRect toolbarSize = [self getToolbarSizeWithinController:controller];
     [_backgroundToolbar setFrame:toolbarSize];
-    [_sidebar setFrame:toolbarSize];
     [_overlay setFrame:[self getOverlayBoundsWithinController:controller]];
 }
 

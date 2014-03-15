@@ -14,8 +14,10 @@
 #import "ELILecturePage.h"
 #import "ELICollaborationEntry.h"
 #import "ELIUser.h"
+#import "ELICollaboration.h"
 
 static ELIUser* user;
+static bool isLecturer;
 
 @implementation ELIAppDelegate
 
@@ -23,20 +25,30 @@ static ELIUser* user;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
-+ (ELIUser*) getUser
++ (ELIUser*)getUser
 {
     return user;
 }
 
-+ (void) setUser:(ELIUser*)_user
++ (void)setUser:(ELIUser*)_user
 {
     user = _user;
 }
 
++ (bool)isLecturer
+{
+    return isLecturer;
+}
+
++ (void)isLecturer:(bool)status
+{
+    isLecturer = status;
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-//    RKLogConfigureByName("RestKit/Network*", RKLogLevelTrace);
-//    RKLogConfigureByName("RestKit/ObjectMapping", RKLogLevelTrace);
+    RKLogConfigureByName("RestKit/Network*", RKLogLevelCritical);
+    RKLogConfigureByName("RestKit/ObjectMapping", RKLogLevelCritical);
     
     // Let AFNetworking manage the activity indicator
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
@@ -106,11 +118,21 @@ static ELIUser* user;
     RKRelationshipMapping *creatorToCollaborationEntryMapping = [RKRelationshipMapping relationshipMappingFromKeyPath:@"creator" toKeyPath:@"creator" withMapping:userMapping];
     [collaborationEntryMapping addPropertyMapping:creatorToCollaborationEntryMapping];
     
-    RKResponseDescriptor *collabrationResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:collaborationEntryMapping method:RKRequestMethodGET pathPattern:@"/collaboration/:id" keyPath:@"collaboration" statusCodes:[NSIndexSet indexSetWithIndex:200]];
+    RKResponseDescriptor *collabrationResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:collaborationEntryMapping method:RKRequestMethodGET pathPattern:@"/collaboration/:id" keyPath:@"collaboration.entries" statusCodes:[NSIndexSet indexSetWithIndex:200]];
     [objectManager addResponseDescriptor:collabrationResponseDescriptor];
     
     RKResponseDescriptor *createUserResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userMapping method:RKRequestMethodPOST pathPattern:@"/user" keyPath:@"user" statusCodes:[NSIndexSet indexSetWithIndex:200]];
     [objectManager addResponseDescriptor:createUserResponseDescriptor];
+    
+    RKObjectMapping *collaborationMapping = [RKObjectMapping mappingForClass:[ELICollaboration class]];
+    [collaborationMapping addAttributeMappingsFromDictionary:@{@"url": @"url"}];
+    
+    RKResponseDescriptor *collaborationCreateResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:collaborationMapping method:RKRequestMethodPOST pathPattern:@"/collaboration" keyPath:@"collaboration" statusCodes:[NSIndexSet indexSetWithIndex:200]];
+    [objectManager addResponseDescriptor:collaborationCreateResponseDescriptor];
+    
+    RKResponseDescriptor *collaborationEntryCreateResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:collaborationEntryMapping method:RKRequestMethodPOST pathPattern:@"/collaboration/:id" keyPath:@"collaborationEntry" statusCodes:[NSIndexSet indexSetWithIndex:200]];
+    
+    [objectManager addResponseDescriptor:collaborationEntryCreateResponseDescriptor];
     
     return YES;
 }

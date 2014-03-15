@@ -18,7 +18,7 @@
 
 @interface ELICollectionViewController () <UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate>
 
-@property NSMutableArray* collectionData;
+@property (strong) NSMutableArray* collectionData;
 @property ELISidebar *sidebar;
 @property UIActivityIndicatorView *indicator;
 
@@ -243,6 +243,11 @@
         ELILectureCell *cell = ((ELILectureCell*) sender);
         ((ELIClassViewController*)[segue destinationViewController]).lecture = cell.lecture;
     }
+}
+
+- (void)sidebarAddEntry
+{
+    NSLog(@"HERE");
 }
 
 @end

@@ -12,5 +12,6 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *logInButton;
 @property (weak, nonatomic) IBOutlet UITextField *userNameField;
+@property (weak, nonatomic) IBOutlet UISwitch *lecturerSwitch;
 
 @end
