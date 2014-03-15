@@ -8,6 +8,37 @@ Schema = mongoose.Schema
 createHashID = ->
   crypto.createHash('sha1').update("#{Math.random()}").digest('hex');
 
+# A description for a task
+task_object = new Schema {
+  url: String
+  device: String
+  image: String
+  completed: { type: Boolean, default: no }
+}
+
+task_object.pre 'save', (next) ->
+  unless this.url
+    id = createHashID()
+    this.url = "#{this.device}/task/#{id}"
+  next()
+
+module.exports.task = db.model 'Task', task_object
+
+# A description for a device
+device_object = new Schema {
+  url: String
+  tasks: [{ type: Schema.ObjectId, ref: 'Task' }]
+  checkin: { type: Date, default: Date.now }
+}
+
+device_object.pre 'save', (next) ->
+  unless this.url
+    id = createHashID()
+    this.url = "/device/#{id}"
+  next()
+
+module.exports.device = db.model 'Device', device_object
+
 # A description for an image
 image_object = new Schema {
   url: String
@@ -117,10 +148,6 @@ class_object.pre 'save', (next) ->
     id = createHashID()
     this.url = "/class/#{id}"
   next()
-
-# class_object.post 'find', (doc) ->
-#   module.exports.lecture.find {'class': doc.class}, (err, result) ->
-#     doc
 
 module.exports.class = db.model 'Class', class_object
 

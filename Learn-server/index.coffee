@@ -190,9 +190,7 @@ app.get '/image/:id', (req, res) ->
     res.sendfile result.path
 
 app.post '/image', (req, res) ->
-  imageHandler req.files.image, (err, path) ->
-    return sendError(res, err) if err
-
+  callback = (path) ->
     api.createImage path, (err, result) ->
       return sendError(res, "failed to create image") unless result
 
@@ -203,6 +201,13 @@ app.post '/image', (req, res) ->
 
       res.setHeader 'Content-Type', 'text/plain'#'application/json'
       res.send response
+
+  if req.files and req.files.image
+    imageHandler req.files.image, (err, path) ->
+      return sendError(res, err) if err
+      callback path
+  else
+    callback "./placeholder.png"
 
 app.post '/image/:id', (req, res) ->
   imageHandler req.files.image, (err, path) ->
@@ -221,6 +226,7 @@ app.post '/image/:id', (req, res) ->
 app.post '/user', (req, res) ->
   name = req.body.name
   return sendError(res, "No name given") unless name
+
   api.createUser name, (err, result) ->
     return sendError(res, err) if err
 
@@ -230,7 +236,69 @@ app.post '/user', (req, res) ->
     res.setHeader 'Content-Type', 'application/json'
     res.send response
 
-port = 80
+app.post '/device', (req, res) ->
+  api.createDevice (err, result) ->
+    if err
+      response = 
+        registered: no
+    else
+      response = 
+        device: result
+        registered: yes
+
+    res.setHeader 'Content-Type', 'application/json'
+    res.send response
+
+checkin_callback = (req, res, checkin) ->
+  url = "/device/#{req.route.params['id']}"
+  api.getDevice url, checkin, (err, result) ->
+    return sendError(res, err) if err
+    return res.status(404).send('Not found') unless result
+
+    response = 
+      device: result
+
+    res.setHeader 'Content-Type', 'application/json'
+    res.send response
+
+app.get '/device/:id', (req, res) ->
+  checkin_callback req, res, false
+
+app.post '/device/:id', (req, res) ->
+  checkin_callback req, res, true
+
+app.post '/device/:id/task', (req, res) ->
+  device = "/device/#{req.route.params['id']}"
+  image = req.body.image
+  return sendError(res, "Null image") unless image
+
+  api.createTask device, image, (err, result) ->
+    return sendError(res, err) if err
+    return res.status(404).send('Not found') unless result
+
+    response = 
+      task: result
+
+    res.setHeader 'Content-Type', 'application/json'
+    res.send response
+
+app.post '/device/:deviceid/task/:taskid', (req, res) ->
+  url = "/device/#{req.route.params['deviceid']}/task/#{req.route.params['taskid']}"
+  
+  completed = req.body.completed 
+  return sendError(res, "Null completed") unless completed
+
+  api.updateTask url, completed, (err, result) ->
+    return sendError(res, err) if err
+    return res.status(404).send('Not found') unless result
+
+    response = 
+      task: result
+
+    res.setHeader 'Content-Type', 'application/json'
+    res.send response
+
+port = 3000 #80
 app.listen port
 console.log "Listening on port #{port}"
 

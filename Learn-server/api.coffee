@@ -134,3 +134,48 @@ module.exports.createUser = (name, callback) ->
     name: name
   }
   i.save callback
+
+module.exports.createDevice = (callback) ->
+  d = new models.device()
+  d.save callback
+
+module.exports.getDevice = (url, checkin, callback) ->
+  models.device
+    .findOne({ url: url })
+    .populate('tasks')
+    .exec (err, device) ->
+      return callback err if err
+      callback null, device #call back here, do update async
+      return unless checkin
+      device.checkin = new Date()
+      device.save (e, d)->
+        console.log e if e
+        console.log d.checkin
+
+module.exports.createTask = (device, image, callback) ->
+  t = new models.task {
+    device: device
+    image: image
+  }
+  t.save (err, task) ->
+    return callback(err) if err
+    models.device
+      .findOne({ url: device })
+      .exec (_e, d) ->
+        return callback(_e) if _e
+        d.tasks.push task._id
+        d.save (_e2, r) ->
+          return callback(_e2) if _e2
+          callback null, task
+
+module.exports.updateTask = (url, completed, callback) ->
+  models.task
+    .findOne({ url: url })
+    .exec (err, task) ->
+      return callback err if err
+      task.completed = completed
+      task.save (_err, result) ->
+        return callback _err if _err
+        callback null, result
+
+
