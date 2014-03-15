@@ -1,5 +1,6 @@
 
 api = require './api'
+capture = require './capture'
 
 # Set the interval for the operations
 interval = 1000
@@ -13,10 +14,15 @@ api.registerDevice (err, result) ->
 
 executeTask = (task) ->
   return if task.completed
+  return if busy
 
-  api.uploadImage task.image, "./captured-image.jpg", (err, url) ->
-    api.updateTask task.url, (err, _task) ->
-      console.log task
+  busy = true
+  capture (err) ->
+    return console.log(err) if err
+    api.uploadImage task.image, "./captured-image.jpg", (err, url) ->
+      api.updateTask task.url, (err, _task) ->
+        busy = false
+        console.log("Uploaded camera shot to "+task.image)
 
 getTasks = ->
   return unless device_url
