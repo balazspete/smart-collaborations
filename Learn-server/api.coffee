@@ -139,6 +139,11 @@ module.exports.createDevice = (callback) ->
   d = new models.device()
   d.save callback
 
+module.exports.getDevices = (callback) ->
+  models.device
+    .find()
+    .exec callback
+
 module.exports.getDevice = (url, checkin, callback) ->
   models.device
     .findOne({ url: url })

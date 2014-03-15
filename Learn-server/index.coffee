@@ -236,6 +236,17 @@ app.post '/user', (req, res) ->
     res.setHeader 'Content-Type', 'application/json'
     res.send response
 
+app.get '/devices', (req, res) ->
+  api.getDevices (err, result) ->
+    return sendError(res, err) if err
+    return res.status(404).send('Not found') unless result
+
+    response = 
+      devices: result
+
+    res.setHeader 'Content-Type', 'application/json'
+    res.send response
+
 app.post '/device', (req, res) ->
   api.createDevice (err, result) ->
     if err
@@ -245,7 +256,8 @@ app.post '/device', (req, res) ->
       response = 
         device: result
         registered: yes
-
+      console.log "Device: #{result.url}"
+      
     res.setHeader 'Content-Type', 'application/json'
     res.send response
 
