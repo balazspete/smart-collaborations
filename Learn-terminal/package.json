@@ -1,0 +1,9 @@
+{
+	"name": "Learn-Terminal",
+	"version": "0.0.1",
+	"dependencies": {
+		"coffee-script": "1.6.3",
+		"request": "2.33.0"
+	},
+	"private": true
+}
