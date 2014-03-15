@@ -150,7 +150,6 @@ module.exports.getDevice = (url, checkin, callback) ->
       device.checkin = new Date()
       device.save (e, d)->
         console.log e if e
-        console.log d.checkin
 
 module.exports.createTask = (device, image, callback) ->
   t = new models.task {

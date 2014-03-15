@@ -298,7 +298,7 @@ app.post '/device/:deviceid/task/:taskid', (req, res) ->
     res.setHeader 'Content-Type', 'application/json'
     res.send response
 
-port = 3000 #80
+port = 80
 app.listen port
 console.log "Listening on port #{port}"
 
