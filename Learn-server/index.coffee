@@ -2,11 +2,12 @@
 ###
 # IMAGES FOLDER PATH
 ###
-global.image_path = "/Users/balazspete/Documents/"
+global.image_path = "./uploads/"
 
 ###
 # DECLARATIONS & SETUP
 ###
+fs = require 'fs'
 express = require 'express'
 mongoose = require 'mongoose'
 
@@ -15,9 +16,15 @@ global.db = db = mongoose.createConnection 'mongodb://localhost:27017/learn', {
   server: { auto_reconnect: true }
 }
 
-imageHandler = require './handleImage'
+image_handler = require './handle_image'
 
 api = require './api'
+
+fs.exists global.image_path, (exists) ->
+  unless exists
+    fs.mkdir global.image_path, (err) ->
+      return console.log err if err
+      console.log "Created folder #{global.image_path}"
 
 app.use express.bodyParser()
 
@@ -203,14 +210,14 @@ app.post '/image', (req, res) ->
       res.send response
 
   if req.files and req.files.image
-    imageHandler req.files.image, (err, path) ->
+    image_handler req.files.image, (err, path) ->
       return sendError(res, err) if err
       callback path
   else
     callback "./placeholder.png"
 
 app.post '/image/:id', (req, res) ->
-  imageHandler req.files.image, (err, path) ->
+  image_handler req.files.image, (err, path) ->
     return sendError(res, err) if err
 
     api.updateImage "/image/#{req.route.params['id']}", path, (err, result) ->
