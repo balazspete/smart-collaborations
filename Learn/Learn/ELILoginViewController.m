@@ -49,6 +49,8 @@
         }
     }
     
+    [ELIAppDelegate isLecturer:self.lecturerSwitch.isOn];
+    
     return true;
 }
 

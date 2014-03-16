@@ -15,8 +15,11 @@
 #import "ELICollaborationEntry.h"
 #import "ELIUser.h"
 #import "ELICollaboration.h"
+#import "ELIDevice.h"
+#import "ELITask.h"
 
 static ELIUser* user;
+static ELIDevice* currentDevice;
 static bool isLecturer;
 
 @implementation ELIAppDelegate
@@ -43,6 +46,16 @@ static bool isLecturer;
 + (void)isLecturer:(bool)status
 {
     isLecturer = status;
+}
+
++ (ELIDevice*)device
+{
+    return currentDevice;
+}
+
++ (void)device:(ELIDevice*)device
+{
+    currentDevice = device;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -133,6 +146,26 @@ static bool isLecturer;
     RKResponseDescriptor *collaborationEntryCreateResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:collaborationEntryMapping method:RKRequestMethodPOST pathPattern:@"/collaboration/:id" keyPath:@"collaborationEntry" statusCodes:[NSIndexSet indexSetWithIndex:200]];
     
     [objectManager addResponseDescriptor:collaborationEntryCreateResponseDescriptor];
+    
+    RKObjectMapping *deviceMapping = [RKObjectMapping mappingForClass:[ELIDevice class]];
+    [deviceMapping addAttributeMappingsFromDictionary:@{
+        @"url": @"url",
+        @"checkin": @"checkin"
+    }];
+    
+    RKResponseDescriptor *devicesResponse = [RKResponseDescriptor responseDescriptorWithMapping:deviceMapping method:RKRequestMethodGET pathPattern:@"/devices" keyPath:@"devices" statusCodes:[NSIndexSet indexSetWithIndex:200]];
+    [objectManager addResponseDescriptor:devicesResponse];
+    
+    RKObjectMapping *taskMapping = [RKObjectMapping mappingForClass:[ELITask class]];
+    [taskMapping addAttributeMappingsFromDictionary:@{
+        @"url": @"url",
+        @"device": @"device",
+        @"image": @"image",
+        @"completed": @"completed"
+    }];
+    
+    RKResponseDescriptor *taskResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:taskMapping method:RKRequestMethodPOST pathPattern:@"/device/:deviceid/task" keyPath:@"task" statusCodes:[NSIndexSet indexSetWithIndex:200]];
+    [objectManager addResponseDescriptor:taskResponseDescriptor];
     
     return YES;
 }

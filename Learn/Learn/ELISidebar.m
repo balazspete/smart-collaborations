@@ -8,6 +8,7 @@
 
 #import "ELISidebar.h"
 #import "ELIClassViewController.h"
+#import "ELIAppDelegate.h"
 
 @interface ELISidebar ()
 
@@ -78,11 +79,22 @@
     }
     
     UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(10, yOffset + 70, 60, 60)];
+    yOffset += 70;
+    
     [addButton setImage:[UIImage imageNamed:@"plus-512.png"] forState:UIControlStateNormal];
     [addButton setTintColor:[UIColor blueColor]];
     [addButton addTarget:controller action:@selector(sidebarAddEntry) forControlEvents:UIControlEventTouchDown];
     [_backgroundToolbar addSubview:addButton];
+    
+    if ([ELIAppDelegate device] && [controller class] == [ELIClassViewController class] && [ELIAppDelegate isLecturer]) {
+        UIButton *takePicture = [[UIButton alloc] initWithFrame:CGRectMake(10, yOffset + 70, 60, 60)];
+        [takePicture setImage:[UIImage imageNamed:@"old_time_camera-512.png"] forState:UIControlStateNormal];
+        [takePicture setTintColor:[UIColor blueColor]];
+        [takePicture addTarget:controller action:@selector(takePicture) forControlEvents:UIControlEventTouchDown];
+        [_backgroundToolbar addSubview:takePicture];
+    }
 #pragma clang diagnostic pop
+    
     [self readjustFrameWithinController:controller];
     
     return self;

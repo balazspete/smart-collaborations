@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		DDACCBA01F8B4024BBAD361F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B93B99CA05C4614ABE41DDF /* libPods.a */; };
+		E811EB1618D4B8B400F41ADE /* ELIDevicesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E811EB1518D4B8B400F41ADE /* ELIDevicesViewController.m */; };
+		E811EB1918D4B90000F41ADE /* ELIDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = E811EB1818D4B90000F41ADE /* ELIDevice.m */; };
+		E811EB1C18D4B9DF00F41ADE /* ELITask.m in Sources */ = {isa = PBXBuildFile; fileRef = E811EB1B18D4B9DF00F41ADE /* ELITask.m */; };
+		E811EB1F18D4BF4C00F41ADE /* ELIDeviceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E811EB1E18D4BF4C00F41ADE /* ELIDeviceCell.m */; };
+		E811EB2118D4C73F00F41ADE /* old_time_camera-512.png in Resources */ = {isa = PBXBuildFile; fileRef = E811EB2018D4C73F00F41ADE /* old_time_camera-512.png */; };
 		E85EC9AD18CE899400A57A39 /* plus-512.png in Resources */ = {isa = PBXBuildFile; fileRef = E85EC9AC18CE899400A57A39 /* plus-512.png */; };
 		E85EC9B718CE9F0700A57A39 /* ELICollaborationEntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E85EC9B618CE9F0700A57A39 /* ELICollaborationEntryViewController.m */; };
 		E85EC9B918CEAC3E00A57A39 /* document-512.png in Resources */ = {isa = PBXBuildFile; fileRef = E85EC9B818CEAC3E00A57A39 /* document-512.png */; };
@@ -60,6 +65,15 @@
 /* Begin PBXFileReference section */
 		36EB4878E2AC49378EDF40E4 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		7B93B99CA05C4614ABE41DDF /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E811EB1418D4B8B400F41ADE /* ELIDevicesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELIDevicesViewController.h; sourceTree = "<group>"; };
+		E811EB1518D4B8B400F41ADE /* ELIDevicesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELIDevicesViewController.m; sourceTree = "<group>"; };
+		E811EB1718D4B90000F41ADE /* ELIDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELIDevice.h; sourceTree = "<group>"; };
+		E811EB1818D4B90000F41ADE /* ELIDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELIDevice.m; sourceTree = "<group>"; };
+		E811EB1A18D4B9DF00F41ADE /* ELITask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELITask.h; sourceTree = "<group>"; };
+		E811EB1B18D4B9DF00F41ADE /* ELITask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELITask.m; sourceTree = "<group>"; };
+		E811EB1D18D4BF4C00F41ADE /* ELIDeviceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELIDeviceCell.h; sourceTree = "<group>"; };
+		E811EB1E18D4BF4C00F41ADE /* ELIDeviceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELIDeviceCell.m; sourceTree = "<group>"; };
+		E811EB2018D4C73F00F41ADE /* old_time_camera-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old_time_camera-512.png"; sourceTree = "<group>"; };
 		E85EC9AC18CE899400A57A39 /* plus-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plus-512.png"; sourceTree = "<group>"; };
 		E85EC9B518CE9F0700A57A39 /* ELICollaborationEntryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELICollaborationEntryViewController.h; sourceTree = "<group>"; };
 		E85EC9B618CE9F0700A57A39 /* ELICollaborationEntryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELICollaborationEntryViewController.m; sourceTree = "<group>"; };
@@ -184,6 +198,7 @@
 		E861D20118AF95AC0033F0A0 /* Learn */ = {
 			isa = PBXGroup;
 			children = (
+				E811EB2018D4C73F00F41ADE /* old_time_camera-512.png */,
 				E85EC9C418D11F6700A57A39 /* back-512.png */,
 				E85EC9BF18CFCEA200A57A39 /* ghost-512.png */,
 				E85EC9B818CEAC3E00A57A39 /* document-512.png */,
@@ -243,6 +258,8 @@
 				E8AA59C018B42A9F00126AB7 /* ELISectionHeader.m */,
 				E8B4ED4D18BA9990002DE09C /* ELICollaborationTableViewCell.h */,
 				E8B4ED4E18BA9990002DE09C /* ELICollaborationTableViewCell.m */,
+				E811EB1D18D4BF4C00F41ADE /* ELIDeviceCell.h */,
+				E811EB1E18D4BF4C00F41ADE /* ELIDeviceCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -260,6 +277,8 @@
 				E85EC9B618CE9F0700A57A39 /* ELICollaborationEntryViewController.m */,
 				E85EC9BA18CF4AB600A57A39 /* ELICollaborationEntryCreatorViewController.h */,
 				E85EC9BB18CF4AB600A57A39 /* ELICollaborationEntryCreatorViewController.m */,
+				E811EB1418D4B8B400F41ADE /* ELIDevicesViewController.h */,
+				E811EB1518D4B8B400F41ADE /* ELIDevicesViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -279,6 +298,10 @@
 				E899381618CCDDB0001CA28B /* ELIUser.m */,
 				E85EC9C118CFF81E00A57A39 /* ELICollaboration.h */,
 				E85EC9C218CFF81E00A57A39 /* ELICollaboration.m */,
+				E811EB1718D4B90000F41ADE /* ELIDevice.h */,
+				E811EB1818D4B90000F41ADE /* ELIDevice.m */,
+				E811EB1A18D4B9DF00F41ADE /* ELITask.h */,
+				E811EB1B18D4B9DF00F41ADE /* ELITask.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -370,6 +393,7 @@
 				E85EC9AD18CE899400A57A39 /* plus-512.png in Resources */,
 				E861D20618AF95AC0033F0A0 /* InfoPlist.strings in Resources */,
 				E8C17CC218CD384C00AC3921 /* smartcollaborations.png in Resources */,
+				E811EB2118D4C73F00F41ADE /* old_time_camera-512.png in Resources */,
 				E861D21118AF95AC0033F0A0 /* Images.xcassets in Resources */,
 				E85EC9C518D11F6700A57A39 /* back-512.png in Resources */,
 				E85EC9B918CEAC3E00A57A39 /* document-512.png in Resources */,
@@ -425,6 +449,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E861D20818AF95AC0033F0A0 /* main.m in Sources */,
+				E811EB1C18D4B9DF00F41ADE /* ELITask.m in Sources */,
 				E861D20C18AF95AC0033F0A0 /* ELIAppDelegate.m in Sources */,
 				E85EC9BC18CF4AB600A57A39 /* ELICollaborationEntryCreatorViewController.m in Sources */,
 				E8C17CC018CD37E800AC3921 /* ELILoginViewController.m in Sources */,
@@ -436,10 +461,13 @@
 				E899381418CCDD7A001CA28B /* ELICollaborationEntry.m in Sources */,
 				E861D23518AF97DC0033F0A0 /* ELILectureCell.m in Sources */,
 				E8AA59C118B42A9F00126AB7 /* ELISectionHeader.m in Sources */,
+				E811EB1918D4B90000F41ADE /* ELIDevice.m in Sources */,
+				E811EB1F18D4BF4C00F41ADE /* ELIDeviceCell.m in Sources */,
 				E8B4ED4918B90C4F002DE09C /* ELILecture.m in Sources */,
 				E8B4ED4F18BA9990002DE09C /* ELICollaborationTableViewCell.m in Sources */,
 				E8B4ED4C18B99280002DE09C /* ELILecturePage.m in Sources */,
 				E899381718CCDDB0001CA28B /* ELIUser.m in Sources */,
+				E811EB1618D4B8B400F41ADE /* ELIDevicesViewController.m in Sources */,
 				E861D23218AF96900033F0A0 /* ELICollectionViewController.m in Sources */,
 				E861D23A18B00CB10033F0A0 /* ELISidebar.m in Sources */,
 			);

@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "ELIUser.h"
+#import "ELIDevice.h"
 
-#define BASEURL @"http://54.195.7.61"
+#define BASEURL @"http://192.168.1.1"
 
 @interface ELIAppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -21,8 +22,12 @@
 
 + (ELIUser*)getUser;
 + (void)setUser:(ELIUser*)user;
+
 + (bool)isLecturer;
 + (void)isLecturer:(bool)status;
+
++ (ELIDevice*)device;
++ (void)device:(ELIDevice*)device;
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;

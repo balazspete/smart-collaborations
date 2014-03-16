@@ -404,36 +404,42 @@
         });
     }
     
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[NSNumber numberWithLong:self.collaborationEntries.count-1].intValue inSection:[NSNumber numberWithInt:0].integerValue];
-    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
-//    [self.tableView reloadData];
+//    return;
+    NSLog(@"HERE %lu", (unsigned long) self.collaborationEntries.count);
+//    if (self.collaborationEntries.count < 1)
+//    {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[NSNumber numberWithLong:self.collaborationEntries.count-1].intValue inSection:[NSNumber numberWithInt:0].integerValue];
+//        if (self.collaborationEntries.count < 2) {
+            [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
+//        }
+//    }
 }
 
 - (void)proceedWithCollaborationEntryCreation:(ELICollaborationEntry*)entry
 {
     ELILecturePage *page = [self.lecture.pages objectAtIndex:self.currentPage];
 
-    if (!page.collaborationUrl || !page.collaborationUrl.length)
-    {
-        [self.objectManager postObject:nil path:@"/collaboration" parameters:@{} success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-            ELICollaboration *collaboration = [mappingResult.array objectAtIndex:0];
-            if (!collaboration)
-            {
-                [self collaborationEntryCreationFailure];
-                return;
-            }
-            
-            NSLog(@"Created collaboration: %@", collaboration.url);
-            
-            
-            
-            ((ELILecturePage*)[self.lecture.pages objectAtIndex:self.currentPage]).collaborationUrl = collaboration.url;
-            [self completeCollaborationEntryCreation:entry collaborationURL:collaboration.url];
-        } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-            [self collaborationEntryCreationFailure];
-        }];
-        return;
-    }
+//    if (!page.collaborationUrl || !page.collaborationUrl.length)
+//    {
+//        [self.objectManager postObject:nil path:@"/collaboration" parameters:@{} success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+//            ELICollaboration *collaboration = [mappingResult.array objectAtIndex:0];
+//            if (!collaboration)
+//            {
+//                [self collaborationEntryCreationFailure];
+//                return;
+//            }
+//            
+//            NSLog(@"Created collaboration: %@", collaboration.url);
+//            
+//            
+//            
+//            ((ELILecturePage*)[self.lecture.pages objectAtIndex:self.currentPage]).collaborationUrl = collaboration.url;
+//            [self completeCollaborationEntryCreation:entry collaborationURL:collaboration.url];
+//        } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+//            [self collaborationEntryCreationFailure];
+//        }];
+//        return;
+//    }
     
     [self completeCollaborationEntryCreation:entry collaborationURL:page.collaborationUrl];
 }
@@ -519,5 +525,20 @@
     [self showPage:[NSNumber numberWithInt:(self.currentPage-1)]];
 }
 
+- (void)takePicture
+{
+    ELILecturePage *page = [self.lecture.pages objectAtIndex:self.currentPage];
+    NSString *path = [NSString stringWithFormat:@"%@/task", [ELIAppDelegate device].url];
+    
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    [params setObject:[ELIAppDelegate device].url forKey:@"device"];
+    [params setObject:page.secondaryUrl forKey:@"image"];
+    
+    [self.objectManager postObject:nil path:path parameters:params success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        NSLog(@"TAKEN");
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        NSLog(@"ERROR");
+    }];
+}
 
 @end
