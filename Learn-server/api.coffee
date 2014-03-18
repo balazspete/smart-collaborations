@@ -156,11 +156,12 @@ module.exports.getDevice = (url, checkin, callback) ->
       device.save (e, d)->
         console.log e if e
 
-module.exports.createTask = (device, image, callback) ->
+module.exports.createTask = (device, image, type, callback) ->
   t = new models.task {
     device: device
     image: image
   }
+  t.type = type if type
   t.save (err, task) ->
     return callback(err) if err
     models.device

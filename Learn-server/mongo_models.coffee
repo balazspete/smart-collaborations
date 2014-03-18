@@ -13,6 +13,7 @@ task_object = new Schema {
   url: String
   device: String
   image: String
+  type: { type: String, default: "capture" }
   completed: { type: Boolean, default: no }
 }
 

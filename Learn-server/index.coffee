@@ -289,9 +289,10 @@ app.post '/device/:id', (req, res) ->
 app.post '/device/:id/task', (req, res) ->
   device = "/device/#{req.route.params['id']}"
   image = req.body.image
+  type = req.body.type if req.body.type
   return sendError(res, "Null image") unless image
 
-  api.createTask device, image, (err, result) ->
+  api.createTask device, image, type, (err, result) ->
     return sendError(res, err) if err
     return res.status(404).send('Not found') unless result
 
