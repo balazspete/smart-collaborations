@@ -1,4 +1,5 @@
 
+config = require './config'
 api = require './api'
 capture = require './capture'
 display = require './display'
@@ -22,7 +23,7 @@ captureTask = (task) ->
         console.log("Uploaded camera shot to "+task.image)
 
 displayTask = (task) ->
-  display url, (error) ->
+  display "http://#{config.host}#{task.image}", (error) ->
     return console.log error if error
     console.log "displaying"
 
@@ -30,11 +31,12 @@ executeTask = (task) ->
   return if task.completed
   return if busy
 
-  busy = true
+  console.log task
   if task.type is "capture"
+    busy = true
     captureTask task
   else if task.type is "display"
-    displayTask task
+    null#displayTask task
 
 getTasks = ->
   return unless device_url
