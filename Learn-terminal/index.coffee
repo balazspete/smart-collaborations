@@ -26,6 +26,8 @@ displayTask = (task) ->
   display "http://#{config.host}#{task.image}", (error) ->
     return console.log error if error
     console.log "displaying"
+    api.updateTask task.url, (err, data) ->
+      console.log "Task updated"
 
 executeTask = (task) ->
   return if task.completed
