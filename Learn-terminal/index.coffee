@@ -26,7 +26,7 @@ displayTask = (task) ->
   display "http://#{config.host}#{task.image}", (error) ->
     return console.log error if error
     console.log "displaying"
-    api.updateTask task.url, (err, data) ->
+    api.updateTask task.url, (err, task) ->
       console.log "Task updated"
 
 executeTask = (task) ->
@@ -38,7 +38,7 @@ executeTask = (task) ->
     busy = true
     captureTask task
   else if task.type is "display"
-    null#displayTask task
+    displayTask task
 
 getTasks = ->
   return unless device_url
