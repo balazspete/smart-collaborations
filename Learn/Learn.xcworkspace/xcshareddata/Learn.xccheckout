@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>FC7283C0-B3D4-421B-A1DD-08FAABA72D42</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Learn</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>496C763A-F4C2-4709-BC6B-F8D393C104D1</key>
+		<string>https://github.com/balazspete/classroom-learning-environment.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Learn/Learn.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>496C763A-F4C2-4709-BC6B-F8D393C104D1</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/balazspete/classroom-learning-environment.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>496C763A-F4C2-4709-BC6B-F8D393C104D1</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>496C763A-F4C2-4709-BC6B-F8D393C104D1</string>
+			<key>IDESourceControlWCCName</key>
+			<string>classroom-learning-environment</string>
+		</dict>
+	</array>
+</dict>
+</plist>
