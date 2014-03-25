@@ -161,7 +161,8 @@ static bool isLecturer;
         @"url": @"url",
         @"device": @"device",
         @"image": @"image",
-        @"completed": @"completed"
+        @"completed": @"completed",
+        @"type": @"type"
     }];
     
     RKResponseDescriptor *taskResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:taskMapping method:RKRequestMethodPOST pathPattern:@"/device/:deviceid/task" keyPath:@"task" statusCodes:[NSIndexSet indexSetWithIndex:200]];

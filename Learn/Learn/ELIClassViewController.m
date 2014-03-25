@@ -17,6 +17,8 @@
 #import "ELICollaborationEntryViewController.h"
 #import <AFNetworking/AFNetworking.h>
 
+#define LECTURE_REFRESH_RATE 1
+
 @interface ELIClassViewController () <UIGestureRecognizerDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property ELISidebar *sidebar;
@@ -24,6 +26,8 @@
 @property NSMutableArray *collaborationEntries;
 @property NSDateFormatter *dateFormat;
 @property NSDateFormatter *timeFormat;
+
+@property int pageSubmitted;
 
 @property ELICollaborationEntry *selectedCollaborationEntry;
 
@@ -93,6 +97,14 @@
     }];
 }
 
+- (void)instructDisplay:(NSString*)imageURL
+{
+    if ([ELIAppDelegate device])
+    {
+        [self createTask:NO];
+    }
+}
+
 - (void)showPage:(NSNumber*)pageNumber
 {
     NSLog(@"Original: %d, Page: %f", self.currentPage, pageNumber.floatValue);
@@ -122,6 +134,7 @@
     {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             [self loadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BASEURL, page.primaryUrl]] intoImageView:self.primary withAsynchronousDispatch:YES addToEntry:nil];
+            
         });
     }
     // Load Secondary image
@@ -130,6 +143,10 @@
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             [self loadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BASEURL, page.secondaryUrl]] intoImageView:self.secondary withAsynchronousDispatch:YES addToEntry:nil];
         });
+        if ([ELIAppDelegate isLecturer])
+        {
+            [self instructDisplay:page.secondaryUrl];
+        }
     }
     // Load collaboration
     if (page.collaborationUrl.length)
@@ -160,7 +177,7 @@
                 [self showPage:[NSNumber numberWithInt:self.currentPage]];
             }
             
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC*10), dispatch_get_main_queue(), ^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC*LECTURE_REFRESH_RATE), dispatch_get_main_queue(), ^{
                 NSLog(@"Refreshing lecture!");
                 [self loadLecture];
             });
@@ -180,6 +197,7 @@
     self.view = self.tableView;
     if (self) {
         // Custom initialization
+        self.pageSubmitted = -1;
     }
     return self;
 }
@@ -187,6 +205,7 @@
 - (void)viewDidLoad	
 {
     [super viewDidLoad];
+    
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotate:) name:@"UIDeviceOrientationDidChangeNotification" object:nil];
 	// Do any additional setup after loading the view.
@@ -354,6 +373,7 @@
     if (sender == [self nextButton])
     {
         ((ELIClassViewController*)[segue destinationViewController]).lecture = self.lecture;
+        [self createTask:NO];
     }
     else if (sender == _tableView)
     {
@@ -523,16 +543,40 @@
 - (void)goBackAPage
 {
     [self showPage:[NSNumber numberWithInt:(self.currentPage-1)]];
+    [self createTask:NO];
 }
 
 - (void)takePicture
 {
+    [self createTask:YES];
+}
+
+- (void)createTask:(bool)takePicture
+{
+    if (![ELIAppDelegate device] || ![ELIAppDelegate isLecturer])
+    {
+        return;
+    }
+    
+    if (!takePicture)
+    {
+        if (self.pageSubmitted == self.currentPage+10) {
+            NSLog(@"NOT CREATING TASK");
+            return;
+        }
+        else
+        {
+            self.pageSubmitted = self.currentPage+10;
+        }
+    }
+    
     ELILecturePage *page = [self.lecture.pages objectAtIndex:self.currentPage];
     NSString *path = [NSString stringWithFormat:@"%@/task", [ELIAppDelegate device].url];
     
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     [params setObject:[ELIAppDelegate device].url forKey:@"device"];
     [params setObject:page.secondaryUrl forKey:@"image"];
+    [params setObject:(takePicture ? @"capture" : @"display") forKey:@"type"];
     
     [self.objectManager postObject:nil path:path parameters:params success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         NSLog(@"TAKEN");

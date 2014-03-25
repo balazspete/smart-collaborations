@@ -14,5 +14,6 @@
 @property NSString *image;
 @property NSString *device;
 @property bool completed;
+@property NSString *type;
 
 @end
